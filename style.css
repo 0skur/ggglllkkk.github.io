@@ -28,6 +28,7 @@ th{
 
 #tables{
     display: flex;
+    flex-flow:initial;
     font-size: larger;
     vertical-align: top;
 }
