@@ -7,7 +7,6 @@
 table{
     flex-direction: column;
     display: flex;
-    font-size: medium;
 }
 
 tr{
@@ -29,7 +28,6 @@ th{
 #tables{
     display: flex;
     flex-flow:initial;
-    font-size: larger;
     vertical-align: top;
 }
 
