@@ -92,9 +92,9 @@ function printErrorMessages(){
 }
 
 function inputModified(element){
-    console.log("NEW INPUT")
-    var indexes=element.originalTarget.id.replace("idInput;", "").split(";");
-    var value=element.originalTarget.value;
+    console.log("NEW INPUT");
+    var indexes=element.target.id.replace("idInput;", "").split(";");
+    var value=element.target.value;
 
     var isValueNumber=true;
     for (let k in value){if("0123456789.,/".includes(value[k])==false){isValueNumber=false;}}
@@ -236,8 +236,12 @@ function initialize(){
         document.getElementById("tables").style.flexFlow="column wrap";
         for(let k in objects){
             objects[k][0].style.width="100%";
-            objects[k][0].style.fontSize="xx-large";
+            objects[k][0].style.fontSize="50px ";
         }
+        document.getElementById("errorMessages").style.fontSize="xx-large";
+        
+        const inputs=document.getElementsByTagName("input");
+        for(let k in inputs){inputs[k].style.fontSize="xx-large";}
     }
 
 
