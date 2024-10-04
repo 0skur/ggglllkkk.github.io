@@ -240,14 +240,14 @@ function initialize(){
             objects[k][0].style.fontSize="50px ";
         }
         document.getElementById("errorMessages").style.fontSize="xx-large";
+        document.getElementsByTagName("h1")[0].style.fontSize="50px";
         
         const inputs=document.getElementsByTagName("input");
-        for(let k in inputs){inputs[k].style.fontSize="xx-large";}
+        for(i=0; i<inputs.length; i++){inputs[i].style.fontSize="xx-large";}
     }
 
 
     console.log(objects, notes);
 }
-
 
 document.body.onload=initialize();
