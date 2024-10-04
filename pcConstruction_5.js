@@ -127,6 +127,7 @@ function inputModified(element){
             inputZone.addEventListener("input", element => inputModified(element));
             inputZone.addEventListener("change", element => inputModified(element));
             inputZone.id="idInput;"+indexes[0]+";"+n+";"+String(objects[indexes[0]][1].childNodes.length-1);
+            inputZone.style.fontSize="xx-large";
             //console.log(objects[indexes[0]][1].childNodes.length)
 
             let inputCase=document.createElement("td");
