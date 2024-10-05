@@ -14,8 +14,13 @@ tr{
     display: flex;
 }
 
-input, td{
-    width: 90%;
+td{
+    width: 98%;
+    text-align: center;
+}
+
+input{
+    width: 98%;
     text-align: center;
 }
 
