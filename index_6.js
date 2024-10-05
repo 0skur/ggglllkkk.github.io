@@ -8,6 +8,13 @@ var isMobileBrowser=false;
 var errorMessageObject=document.getElementById("errorMessages");
 var averageObject=document.getElementById("average");
 var outOf20=document.getElementById("outOf20");
+var bodyObject=document.getElementsByTagName("body")[0];
+
+function cleanPage(){
+    //console.log("clean page");
+    initialize(false);
+    calculAverage();
+}
 
 function retrieveNotes(){
     const retrievedNotes=JSON.parse(localStorage.getItem("notes"));
@@ -87,14 +94,24 @@ function calculAverage(){
     }
 
     averageValue=ponderedValueSum/ponderationSum;
+    averageValue=averageValue/5
+
+    if(averageValue<8){bodyObject.style.backgroundColor="#FF0000";}
+    else if(averageValue>=8 && averageValue<10){bodyObject.style.backgroundColor="#ED7F10";}
+    else{bodyObject.style.backgroundColor="#00FF00";}
+
     if(ponderationSum!=0){
-        averageObject.innerHTML=(averageValue/5).toFixed(2);
+        averageObject.innerHTML=averageValue.toFixed(2);
         outOf20.style.visibility="visible";
     }
     else{
         averageObject.innerHTML="";
         outOf20.style.visibility="collapse";
+        bodyObject.style.backgroundColor="#FFFFFF";
     }
+
+    const stringifiedNotes=JSON.stringify(notes);
+    localStorage.setItem("notes", stringifiedNotes);
 }
 
 function printErrorMessages(){
@@ -188,14 +205,15 @@ function inputModified(element){
         }
     }
 
-    const stringifiedNotes=JSON.stringify(notes);
-    localStorage.setItem("notes", stringifiedNotes);
-
     printErrorMessages();
     calculAverage();
 }
 
-function initialize(){
+function initialize(firstTime){
+    objects=[];
+    notes=[];
+    document.getElementById("tables").innerHTML="";
+
     var cssFile=document.createElement("link");
     cssFile.href="style.css";
     cssFile.rel="stylesheet";
@@ -271,9 +289,11 @@ function initialize(){
         for(i=0; i<inputs.length; i++){inputs[i].style.fontSize="xx-large";}
     }
 
-    retrieveNotes();
+    document.getElementById("cleanButton").addEventListener("click", cleanPage);
+
+    if(firstTime){retrieveNotes();}
 
     console.log(objects, notes);
 }
 
-document.body.onload=initialize();
+document.body.onload=initialize(true);
