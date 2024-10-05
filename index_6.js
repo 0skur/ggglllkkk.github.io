@@ -129,6 +129,7 @@ function inputModified(element){
         inputZone.addEventListener("input", element => inputModified(element));
         inputZone.addEventListener("change", element => inputModified(element));
         inputZone.id="idInput;"+indexes[0]+";"+indexes[1]+";"+String(parseInt(indexes[2])+1);
+        inputZone.style.width=String(98-subjects[k][2].length*3)+"%";
         if(isMobileBrowser){inputZone.style.fontSize="xx-large";}
         
         inputCase.appendChild(inputZone);
