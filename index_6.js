@@ -9,6 +9,26 @@ var errorMessageObject=document.getElementById("errorMessages");
 var averageObject=document.getElementById("average");
 var outOf20=document.getElementById("outOf20");
 
+function retrieveNotes(){
+    const retrievedNotes=JSON.parse(localStorage.getItem("notes"));
+    if(retrievedNotes){
+        for(let k in retrievedNotes){
+            for(let n in retrievedNotes[k]){
+                for(let i in retrievedNotes[k][n]){
+                    let value=retrievedNotes[k][n][i]
+                    if(value!=""){
+                        let fakeInput=document.createElement("input");
+                        fakeInput.target=document.getElementById("idInput;"+k+";"+n+";"+i);
+                        document.getElementById("idInput;"+k+";"+n+";"+i).value=value;
+                        inputModified(fakeInput);
+                    }
+                }
+            }
+        }
+
+    }
+}
+
 function calculAverage(){
     //console.log("average calculus");
     var ponderedValueSum=0;
@@ -92,6 +112,7 @@ function printErrorMessages(){
 }
 
 function inputModified(element){
+    //console.log(element);
     //console.log("NEW INPUT");
     var indexes=element.target.id.replace("idInput;", "").split(";");
     var value=element.target.value;
@@ -165,6 +186,9 @@ function inputModified(element){
             }
         }
     }
+
+    const stringifiedNotes=JSON.stringify(notes);
+    localStorage.setItem("notes", stringifiedNotes);
 
     printErrorMessages();
     calculAverage();
@@ -245,7 +269,7 @@ function initialize(){
         for(i=0; i<inputs.length; i++){inputs[i].style.fontSize="xx-large";}
     }
 
-    //<link href="style.css" rel="stylesheet" type="text/css" />
+    retrieveNotes();
 
     console.log(objects, notes);
 }
