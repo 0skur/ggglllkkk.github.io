@@ -145,7 +145,7 @@ function inputModified(element){
         let inputCase=document.createElement("td");
         let inputZone=document.createElement("input");
         inputZone.type="text";
-        inputZone.inputMode="numeric";
+        inputZone.inputMode="decimal";
         if(subjects[indexes[0]][2][indexes[1]].length==3){inputZone.placeholder="/"+String(subjects[indexes[0]][2][indexes[1]][2]); }
         else{inputZone.placeholder="/20";}
         inputZone.addEventListener("input", element => inputModified(element));
@@ -226,7 +226,7 @@ function initialize(){
             let subInputCase=document.createElement("td");
             let inputZone=document.createElement("input");
             inputZone.type="text";
-            inputZone.inputMode="numeric";
+            inputZone.inputMode="decimal";
             if(subjects[k][2][n].length==3){inputZone.placeholder="/"+String(subjects[k][2][n][2]); }
             else{inputZone.placeholder="/20";}
             inputZone.addEventListener("input", element => inputModified(element));
