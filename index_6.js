@@ -115,7 +115,7 @@ function inputModified(element){
     //console.log(element);
     //console.log("NEW INPUT");
     var indexes=element.target.id.replace("idInput;", "").split(";");
-    var value=element.target.value;
+    var value=element.target.value.replace(",", ".");
 
     var isValueNumber=true;
     for(let k in value){if("0123456789.,/".includes(value[k])==false){isValueNumber=false;}}
