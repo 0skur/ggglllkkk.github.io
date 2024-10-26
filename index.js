@@ -15,6 +15,47 @@ var averageObject=document.getElementById("average");
 var outOf20=document.getElementById("outOf20");
 var bodyObject=document.getElementsByTagName("body")[0];
 
+var currentAngle=100;
+var anglesList=[0]
+for(i=1;i<99;i++){
+    let rotateDegree=-0.00216021602*Math.pow(i,2)+0.21602160216*i;
+    anglesList.push(anglesList[anglesList.length-1]+rotateDegree);
+}
+anglesList.push(360);
+
+function turnObject(){
+    document.getElementById("parameterButton").style.transform="rotate("+String(anglesList[currentAngle])+"deg)";
+    currentAngle+=1;
+}
+
+function changeParameters(){
+    if(currentAngle<=105){
+        temp=setTimeout(";");
+        for(i=0;i<=temp;i++){clearInterval(i);clearTimeout(i);}
+
+        currentAngle=0;
+        a=setInterval(turnObject, 10);
+        setTimeout(()=>clearInterval(a), 1600);
+    }
+}
+
+/*
+function changeParameters(tg, i=0){
+    console.log(i)
+    if (i<100){
+        document.getElementById("parameterButton").style.transform="rotate("+String(anglesList[i])+"deg)";
+        setTimeout(changeParameters(tg, i+1), 100);
+    }
+}*/
+
+/*
+function changeParameters(){
+    for(i=0;i<100;i++){
+        setTimeout(()=>console.log(i), 10*i)
+        //setTimeout(()=> turnObject(document.getElementById("parameterButton"), i), 10*i);
+    }
+}*/
+
 function exportData(){
     navigator.clipboard.writeText(JSON.stringify(notes));
     document.getElementById("dialogBox").innerHTML="Les données ont été copiées.";
@@ -352,6 +393,7 @@ function initialize(firstTime){
     document.getElementById("cleanButton").addEventListener("click", cleanPage);
     document.getElementById("importDataButton").addEventListener("click", importData);
     document.getElementById("exportDataButton").addEventListener("click", exportData);
+    document.getElementById("parameterButton").addEventListener("click", changeParameters);
 
     if(firstTime){retrieveNotes(JSON.parse(localStorage.getItem("notes")));}
 

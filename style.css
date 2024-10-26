@@ -40,6 +40,7 @@ th{
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 50px;
 }
 
 #outOf20{
@@ -63,6 +64,13 @@ th{
 
 #mainBody{
     position: relative;
+}
+
+#parameterButton{
+    height: 40px;
+    width: 40px;
+    position: static;
+    right: 5px;
 }
 
 .column{
