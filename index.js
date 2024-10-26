@@ -38,6 +38,10 @@ function changeParameters(){
         a=setInterval(turnObject, 10);
         setTimeout(()=>clearInterval(a), 1600);
     }
+    else{
+        temp=setTimeout(";");
+        for(i=0;i<=temp;i++){clearInterval(i);clearTimeout(i);}
+    }
 }
 
 function exportData(){
