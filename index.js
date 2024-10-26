@@ -29,18 +29,12 @@ function turnObject(){
 }
 
 function changeParameters(){
-    if(currentAngle<=105){
-        temp=setTimeout(";");
-        for(i=0;i<=temp;i++){clearInterval(i);clearTimeout(i);}
+    temp=setTimeout(";");
+    for(i=0;i<=temp;i++){clearInterval(i);clearTimeout(i);}
 
-        currentAngle=0;
-        a=setInterval(turnObject, 10);
-        setTimeout(()=>clearInterval(a), 1600);
-    }
-    else{
-        temp=setTimeout(";");
-        for(i=0;i<=temp;i++){clearInterval(i);clearTimeout(i);}
-    }
+    currentAngle=0;
+    a=setInterval(turnObject, 10);
+    setTimeout(()=>clearInterval(a), 1600);
 }
 
 function exportData(){
