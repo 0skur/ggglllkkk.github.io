@@ -1,0 +1,64 @@
+@charset "utf-8";
+@font-face {
+    font-family: clementN;
+    src: url(clementnumbers-regular.ttf);
+}
+
+table{
+    flex-direction: column;
+    display: flex;
+}
+
+tr{
+    width: 100%;
+    display: flex;
+}
+
+td{
+    width: 98%;
+    text-align: center;
+}
+
+input{
+    width: 98%;
+    text-align: center;
+}
+
+th{
+    width:100%;
+    text-align: center;
+    border: 1px solid black;
+}
+
+#tables{
+    display: flex;
+    flex-flow:initial;
+    vertical-align: top;
+}
+
+#errorMessages{
+    color:red;
+    font-size: large;
+    font-weight: bolder;
+}
+
+#average{
+    font-size: 200px;
+    font-family: "clementN"
+}
+
+#outOf20{
+    font-size: xx-large;
+    font-family: "clementN";
+    visibility: collapse;
+}
+
+.column{
+    text-align: center;
+    border: 1px solid black;
+    height: 100%;
+}
+
+.firstLine{
+    display: inline-block;
+}

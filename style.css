@@ -5,35 +5,24 @@
 }
 
 table{
-    flex-direction: column;
-    display: flex;
-}
-
-tr{
     width: 100%;
-    display: flex;
-}
-
-td{
-    width: 98%;
-    text-align: center;
 }
 
 input{
-    width: 98%;
     text-align: center;
 }
 
 th{
-    width:100%;
-    text-align: center;
     border: 1px solid black;
 }
 
 #tables{
+    row-gap: 5px;
+    width: 100%;
     display: flex;
-    flex-flow:initial;
-    vertical-align: top;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    text-align: center;
 }
 
 #errorMessages{
@@ -44,21 +33,47 @@ th{
 
 #average{
     font-size: 200px;
-    font-family: "clementN"
+    font-family: "clementN";
+}
+
+#firstLine{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 #outOf20{
     font-size: xx-large;
-    font-family: "clementN";
     visibility: collapse;
 }
 
-.column{
-    text-align: center;
-    border: 1px solid black;
-    height: 100%;
+#dataOptions{
+    position: fixed;
+    bottom: 5px;
+    left: 5px;
+    display: inline;
 }
 
-.firstLine{
-    display: inline-block;
+#dialogBox{
+    background-color: #16161d;
+    color: white;
+    position: fixed;
+    bottom: 5px;
+    right: 5px;
+}
+
+.column{
+    border: 1px solid black;
+}
+
+.subjectOutOf20{
+    font-size: 20px;
+    font-family: "clementN"
+}
+
+.subSubjectTableLine{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-evenly;
+    flex-flow: row;
 }
