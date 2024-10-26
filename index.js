@@ -383,11 +383,10 @@ function initialize(firstTime){
 
         document.getElementById("mainBody").style.top="10pt";
         document.getElementById("mainBody").style.bottom="10pt";
-
-        /*document.getElementById("dataOptions").style.left="15px";
-        document.getElementById("dataOptions").style.bottom="15px";
-        document.getElementById("dialogBox").style.left="15px";
-        document.getElementById("dialogBox").style.bottom="15px";*/
+        
+        document.getElementById("firstLine").style.height="100px";
+        document.getElementById("parameterButton").style.height="80px";
+        document.getElementById("parameterButton").style.width="80px";
     }
 
     document.getElementById("cleanButton").addEventListener("click", cleanPage);
