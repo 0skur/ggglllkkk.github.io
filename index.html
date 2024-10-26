@@ -6,24 +6,26 @@
         <meta charset="utf-8"/> 
     </head>
     <body>
-        <div width="80%" id="firstLine">
-            <h1>Calcul de la moyenne</h1>
-            <button id="cleanButton">nettoyer</button>
+        <div id="mainBody">
+            <div width="80%" id="firstLine">
+                <h1>Calcul de la moyenne</h1>
+                <button id="cleanButton">nettoyer</button>
+            </div>
+
+            <div id="tables"></div>
+
+            <text id="errorMessages"></text><br>
+            <text id="average"></text><text id="outOf20">/20</text>
+            <text id="test"></text>
+
+            <div id="dataOptions">
+                <input type="text" placeholder="données à importer" id="dataToImport">
+                <button id="importDataButton">importer données</button>
+                <button id="exportDataButton">exporter données</button>
+            </div>
+
+            <dialog id="dialogBox"></dialog>
         </div>
-
-        <div id="tables"></div>
-
-        <text id="errorMessages"></text><br>
-        <text id="average"></text><text id="outOf20">/20</text>
-        <text id="test"></text>
-
-        <div id="dataOptions">
-            <input type="text" placeholder="données à importer" id="dataToImport">
-            <button id="importDataButton">importer données</button>
-            <button id="exportDataButton">exporter données</button>
-        </div>
-
-        <dialog id="dialogBox"></dialog>
 
         <script language="javascript" src="index.js"></script>
     </body>

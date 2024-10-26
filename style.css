@@ -61,6 +61,10 @@ th{
     right: 5px;
 }
 
+#mainBody{
+    position: relative;
+}
+
 .column{
     border: 1px solid black;
 }

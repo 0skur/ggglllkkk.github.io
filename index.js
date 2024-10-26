@@ -320,10 +320,13 @@ function initialize(firstTime){
         document.getElementById("exportDataButton").style.fontSize="20px";
         document.getElementById("dialogBox").style.fontSize="20px";
 
-        document.getElementById("dataOptions").style.left="15px";
+        document.getElementById("mainBody").style.top="44pt";
+        document.getElementById("mainBody").style.bottom="34pt";
+
+        /*document.getElementById("dataOptions").style.left="15px";
         document.getElementById("dataOptions").style.bottom="15px";
         document.getElementById("dialogBox").style.left="15px";
-        document.getElementById("dialogBox").style.bottom="15px";
+        document.getElementById("dialogBox").style.bottom="15px";*/
     }
 
     document.getElementById("cleanButton").addEventListener("click", cleanPage);
