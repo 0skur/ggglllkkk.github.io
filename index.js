@@ -29,6 +29,7 @@ function turnObject(){
 }
 
 function changeParameters(){
+    document.getElementById("cleanButton").innerHTML=currentAngle;
     if(currentAngle<=105){
         temp=setTimeout(";");
         for(i=0;i<=temp;i++){clearInterval(i);clearTimeout(i);}
@@ -38,23 +39,6 @@ function changeParameters(){
         setTimeout(()=>clearInterval(a), 1600);
     }
 }
-
-/*
-function changeParameters(tg, i=0){
-    console.log(i)
-    if (i<100){
-        document.getElementById("parameterButton").style.transform="rotate("+String(anglesList[i])+"deg)";
-        setTimeout(changeParameters(tg, i+1), 100);
-    }
-}*/
-
-/*
-function changeParameters(){
-    for(i=0;i<100;i++){
-        setTimeout(()=>console.log(i), 10*i)
-        //setTimeout(()=> turnObject(document.getElementById("parameterButton"), i), 10*i);
-    }
-}*/
 
 function exportData(){
     navigator.clipboard.writeText(JSON.stringify(notes));
