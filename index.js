@@ -316,6 +316,14 @@ function initialize(firstTime){
         for(i=0; i<inputs.length; i++){inputs[i].style.fontSize="xx-large";}
 
         document.getElementById("cleanButton").style.fontSize="30px";
+        document.getElementById("importDataButton").style.fontSize="30px";
+        document.getElementById("exportDataButton").style.fontSize="30px";
+        document.getElementById("dialogBox").style.fontSize="30px";
+
+        document.getElementById("dataOptions").style.left="20px";
+        document.getElementById("dataOptions").style.bottom="20px";
+        document.getElementById("dialogBox").style.left="20px";
+        document.getElementById("dialogBox").style.bottom="20px";
     }
 
     document.getElementById("cleanButton").addEventListener("click", cleanPage);
