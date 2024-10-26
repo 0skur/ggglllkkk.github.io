@@ -320,8 +320,8 @@ function initialize(firstTime){
         document.getElementById("exportDataButton").style.fontSize="20px";
         document.getElementById("dialogBox").style.fontSize="20px";
 
-        document.getElementById("mainBody").style.top="40pt";
-        document.getElementById("mainBody").style.bottom="40pt";
+        document.getElementById("mainBody").style.top="10pt";
+        document.getElementById("mainBody").style.bottom="10pt";
 
         /*document.getElementById("dataOptions").style.left="15px";
         document.getElementById("dataOptions").style.bottom="15px";
