@@ -77,7 +77,6 @@ function retrieveNotes(retrievedNotes){
 }
 
 function calculAverage(){
-    document.getElementById("cleanButton").innerHTML=currentAngle;
     //console.log("average calculus");
     var ponderedValueSum=0;
     var ponderationSum=0;
