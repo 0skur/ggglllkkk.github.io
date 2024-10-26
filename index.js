@@ -5,6 +5,11 @@ var errorMessages=[];
 var averageValue=NaN;
 var isMobileBrowser=false;
 
+var gradientCoeffs=[ [0.34,-10.7,64.6,256],
+                    [-0.28,6.2,-12.3,-1.4],
+                    [-0.18,6.66,-46.6,4.3]
+]
+
 var errorMessageObject=document.getElementById("errorMessages");
 var averageObject=document.getElementById("average");
 var outOf20=document.getElementById("outOf20");
@@ -18,8 +23,10 @@ function exportData(){
 }
 
 function importData(){
+    initialize(false);
     retrieveNotes(JSON.parse(document.getElementById("dataToImport").value));
     document.getElementById("dataToImport").value="";
+    calculAverage();
 }
 
 function cleanPage(){
@@ -116,9 +123,22 @@ function calculAverage(){
     averageValue=ponderedValueSum/ponderationSum;
     averageValue=averageValue/5
 
+    /*
     if(averageValue<8){bodyObject.style.backgroundColor="#FF0000";}
     else if(averageValue>=8 && averageValue<10){bodyObject.style.backgroundColor="#ED7F10";}
-    else{bodyObject.style.backgroundColor="#00FF00";}
+    else{bodyObject.style.backgroundColor="#00FF00";}*/
+
+    let rgbColors=["","",""];
+
+    for (let k in gradientCoeffs){
+        let a=0
+        for (let n in gradientCoeffs[k]){
+            a+=Math.pow(averageValue,n)*gradientCoeffs[k][3-n]
+        }
+        rgbColors[k]=String(a)
+    }
+
+    bodyObject.style.backgroundColor="rgb("+rgbColors[0]+","+rgbColors[1]+","+rgbColors[2]+")";
 
     if(ponderationSum!=0){
         averageObject.innerHTML=averageValue.toFixed(2);
