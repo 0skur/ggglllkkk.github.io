@@ -29,7 +29,6 @@ function turnObject(){
 }
 
 function changeParameters(){
-    document.getElementById("cleanButton").innerHTML=currentAngle;
     if(currentAngle<=105){
         temp=setTimeout(";");
         for(i=0;i<=temp;i++){clearInterval(i);clearTimeout(i);}
@@ -84,6 +83,7 @@ function retrieveNotes(retrievedNotes){
 }
 
 function calculAverage(){
+    document.getElementById("cleanButton").innerHTML=currentAngle;
     //console.log("average calculus");
     var ponderedValueSum=0;
     var ponderationSum=0;
