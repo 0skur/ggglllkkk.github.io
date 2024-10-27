@@ -31,12 +31,23 @@ var isParameterMenuOpen=false;
 function modifiedSubject(element){
     let boxID=element.target.parentNode.id;
     let index=parseInt(boxID.replace("idSubject;", ""));
+    let newIndex=document.getElementById(boxID).childNodes[0].value;
 
-    subjects[index][0]=document.getElementById(boxID).childNodes[1].value;
-    subjects[index][1]=parseFloat(document.getElementById(boxID).childNodes[3].value);
+    let subjectArray=subjects[index];
+    subjects.splice(index, 1);
+    subjects.splice(newIndex, 0, subjectArray);
+
+    let notesArray=notes[index]
+    notes.splice(index, 1);
+    notes.splice(newIndex, 0, notesArray);
+
+    console.log("shiet", subjects);
+
+    subjects[newIndex][0]=document.getElementById(boxID).childNodes[2].value;
+    subjects[newIndex][1]=parseFloat(document.getElementById(boxID).childNodes[4].value);
 
     //subjects[index][0]=value;
-    initialize();
+    initialize(true);
 }
 
 function addNewSubject(){
@@ -400,6 +411,18 @@ function initialize(firstTime=false){
             let subjectNameBox=document.createElement("div");
             subjectNameBox.id="idSubject;"+k;
 
+            let subjectOrder=document.createElement("select");
+            subjectOrder.style.color="#16161d";
+            subjectOrder.style.width="50px";
+            for(let i in subjects){
+                let tempOption=document.createElement("option");
+                tempOption.value=parseInt(i);
+                tempOption.innerHTML=parseInt(i)+1;
+                if(i==k){tempOption.selected=true;}
+                subjectOrder.appendChild(tempOption);
+            }
+            subjectOrder.addEventListener("change", element=> modifiedSubject(element));
+
             let subjectName=document.createElement("input");
             subjectName.value=subjects[k][0];
             subjectName.addEventListener("input", element => modifiedSubject(element));
@@ -409,7 +432,8 @@ function initialize(firstTime=false){
             if(isMobileBrowser){subjectCoeff.style.width="80px";}
             subjectCoeff.addEventListener("input", element => modifiedSubject(element));
 
-            subjectNameBox.appendChild(document.createTextNode("Nom de la Matière : "));
+            subjectNameBox.appendChild(subjectOrder);
+            subjectNameBox.appendChild(document.createTextNode("   Nom de la Matière : "));
             subjectNameBox.appendChild(subjectName);
             subjectNameBox.appendChild(document.createTextNode("   Coeff : "));
             subjectNameBox.appendChild(subjectCoeff);
