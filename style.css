@@ -76,7 +76,6 @@ th{
 }
 
 #parametersBox{
-    visibility: collapse;
     z-index: 1;
     position: absolute;
     height: 100%;
@@ -86,7 +85,7 @@ th{
     right: 0px;
     padding: 5px;
     color: white;
-    display: flex;
+    display: none;
     flex-flow: column;
     gap: 5px;
 }

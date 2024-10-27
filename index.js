@@ -77,11 +77,11 @@ function changeParameters(){
     temp=setTimeout(";");
     for(i=0;i<=temp;i++){clearInterval(i);clearTimeout(i);}
 
-    document.getElementById("parametersBox").style.visibility="visible";
+    document.getElementById("parametersBox").style.display="flex";
     isParameterMenuOpen=!isParameterMenuOpen;
     currentAngle=0;
     a=setInterval(openCloseParameterMenu, 10);
-    setTimeout(()=>{clearInterval(a);if(isParameterMenuOpen==false){document.getElementById("parametersBox").style.visibility="collapse";}}, 2000);
+    setTimeout(()=>{clearInterval(a);if(isParameterMenuOpen==false){document.getElementById("parametersBox").style.display="none";}}, 2000);
 }
 
 function exportData(){
@@ -406,6 +406,7 @@ function initialize(firstTime=false){
             let subjectCoeff=document.createElement("input");
             subjectCoeff.value=subjects[k][1];
             subjectCoeff.style.width="40px";
+            if(isMobileBrowser){subjectCoeff.style.width="80px";}
             subjectCoeff.addEventListener("input", element => modifiedSubject(element));
 
             subjectNameBox.appendChild(document.createTextNode("Nom de la Matière : "));
@@ -444,7 +445,7 @@ function initialize(firstTime=false){
         document.getElementById("parametersBox").style.width="90%";
         document.getElementById("parametersBox").style.fontSize="20px";
         document.getElementById("parametersBox").style.paddingTop="70px";
-        document.getElementById("createNewSubjectBox").style.height="30px";
+        document.getElementById("createNewSubjectBox").style.height="50px";
     }
 
     document.getElementById("cleanButton").addEventListener("click", cleanPage);
