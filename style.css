@@ -76,6 +76,7 @@ th{
 }
 
 #parametersBox{
+    visibility: collapse;
     z-index: 1;
     position: absolute;
     height: 100%;

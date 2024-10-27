@@ -22,7 +22,7 @@ for(i=1;i<99;i++){
     anglesList.push(anglesList[anglesList.length-1]+rotateDegree);
 }
 anglesList.push(360);
-var isParameterMenuOpen=true;
+var isParameterMenuOpen=false;
 
 
 
@@ -77,10 +77,11 @@ function changeParameters(){
     temp=setTimeout(";");
     for(i=0;i<=temp;i++){clearInterval(i);clearTimeout(i);}
 
+    document.getElementById("parametersBox").style.visibility="visible";
     isParameterMenuOpen=!isParameterMenuOpen;
     currentAngle=0;
     a=setInterval(openCloseParameterMenu, 10);
-    setTimeout(()=>clearInterval(a), 2000);
+    setTimeout(()=>{clearInterval(a);if(isParameterMenuOpen==false){document.getElementById("parametersBox").style.visibility="collapse";}}, 2000);
 }
 
 function exportData(){
@@ -441,6 +442,9 @@ function initialize(firstTime=false){
         document.getElementById("parameterButton").style.width="80px";
 
         document.getElementById("parametersBox").style.width="90%";
+        document.getElementById("parametersBox").style.fontSize="20px";
+        document.getElementById("parametersBox").style.paddingTop="70px";
+        document.getElementById("createNewSubjectBox").style.height="30px";
     }
 
     document.getElementById("cleanButton").addEventListener("click", cleanPage);
