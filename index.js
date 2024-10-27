@@ -110,8 +110,11 @@ function importData(){
 }
 
 function cleanPage(){
-    //console.log("clean page");
-    initialize();
+    //console.log("clean page")
+    notes=[];
+    localStorage.setItem("notes", JSON.stringify([]));
+
+    initialize(true);
 }
 
 function retrieveNotes(retrievedNotes){
@@ -412,6 +415,7 @@ function initialize(firstTime=false){
             subjectNameBox.id="idSubject;"+k;
 
             let subjectOrder=document.createElement("select");
+            subjectOrder.classList.add("changeSubjectOrder");
             subjectOrder.style.color="#16161d";
             subjectOrder.style.width="50px";
             for(let i in subjects){
@@ -425,9 +429,11 @@ function initialize(firstTime=false){
 
             let subjectName=document.createElement("input");
             subjectName.value=subjects[k][0];
+            subjectName.classList.add("changeSubjectNameInput");
             subjectName.addEventListener("input", element => modifiedSubject(element));
             let subjectCoeff=document.createElement("input");
             subjectCoeff.value=subjects[k][1];
+            subjectCoeff.classList.add("changeSubjectCoeffInput");
             subjectCoeff.style.width="40px";
             if(isMobileBrowser){subjectCoeff.style.width="80px";}
             subjectCoeff.addEventListener("input", element => modifiedSubject(element));
@@ -452,7 +458,7 @@ function initialize(firstTime=false){
         document.getElementsByTagName("h1")[0].style.fontSize="50px";
         
         const inputs=document.getElementsByTagName("input");
-        for(i=0; i<inputs.length; i++){inputs[i].style.fontSize="xx-large";}
+        for(i=0; i<inputs.length; i++){if(inputs[i].parentNode.id.includes("idSubject")==false && inputs[i].parentNode.id!="createNewSubjectBox"){inputs[i].style.fontSize="xx-large";}}
 
         document.getElementById("cleanButton").style.fontSize="30px";
         document.getElementById("importDataButton").style.fontSize="20px";
@@ -467,9 +473,17 @@ function initialize(firstTime=false){
         document.getElementById("parameterButton").style.width="80px";
 
         document.getElementById("parametersBox").style.width="95%";
-        document.getElementById("parametersBox").style.fontSize="20px";
+        document.getElementById("parametersBox").style.fontSize="40px";
         document.getElementById("parametersBox").style.paddingTop="70px";
         document.getElementById("createNewSubjectBox").style.height="50px";
+        document.getElementById("preSelectionMenu").style.fontSize="20px"
+        document.getElementById("preselectionBox").style.fontSize="40px";
+        document.getElementById("newSubjectName").style.fontSize="30px";
+        document.getElementById("newSubjectCoeff").style.fontSize="30px";
+
+        for(i=0; i<document.getElementsByClassName("changeSubjectNameInput").length; i++){document.getElementsByClassName("changeSubjectNameInput")[i].style.fontSize="30px";}
+        for(i=0; i<document.getElementsByClassName("changeSubjectCoeffInput").length; i++){document.getElementsByClassName("changeSubjectCoeffInput")[i].style.fontSize="20px";document.getElementsByClassName("changeSubjectCoeffInput")[i].style.width="50px";}
+        for(i=0; i<document.getElementsByClassName("changeSubjectOrder").length; i++){document.getElementsByClassName("changeSubjectOrder")[i].style.fontSize="20px";}
     }
 
     document.getElementById("cleanButton").addEventListener("click", cleanPage);
