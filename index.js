@@ -1,5 +1,5 @@
 var subjects=[["Maths", 7, [["DS", 4], ["Tests", 1, 5]]], ["Physique", 7, [["DS", 4], ["Tests", 1]]], ["Chimie", 4, [["tests", 1]]], ["Bio", 3, [["tests", 1]]], ["Info", 3, [["tests", 1]]], ["Anglais", 1.5, [["tests", 1]]], ["LV2", 1.5, [["tests", 1]]], ["Sport", 1.5, [["tests", 1]]], ["Culture G", 1.5, [["tests", 1]]]];
-var objects=[];//[[column, table],]
+var objects=[];//[[column, table, subjectAverage],]
 var notes=[];
 var errorMessages=[];
 var averageValue=NaN;
@@ -25,11 +25,28 @@ anglesList.push(360);
 var isParameterMenuOpen=true;
 
 
+
+
+
+function modifiedSubject(element){
+    let boxID=element.target.parentNode.id;
+    let index=parseInt(boxID.replace("idSubject;", ""));
+
+    subjects[index][0]=document.getElementById(boxID).childNodes[1].value;
+    subjects[index][1]=parseFloat(document.getElementById(boxID).childNodes[3].value);
+
+    //subjects[index][0]=value;
+    initialize();
+}
+
 function addNewSubject(){
-    subjects.push([document.getElementById("newSubjectName").value, parseFloat(document.getElementById("newSubjectCoeff")), []]);
+    subjects.push([document.getElementById("newSubjectName").value, parseFloat(document.getElementById("newSubjectCoeff").value), []]);
+    document.getElementById("newSubjectName").value="";
+    document.getElementById("newSubjectCoeff").value="";
+
+    console.log(subjects)
 
     initialize();
-    calculAverage();
 }
 
 function changePreselection(){
@@ -37,9 +54,10 @@ function changePreselection(){
     if(value=="CPPV"){subjects=[["Maths", 7, [["DS", 4], ["Tests", 1, 5]]], ["Physique", 7, [["DS", 4], ["Tests", 1]]], ["Chimie", 4, [["tests", 1]]], ["Bio", 3, [["tests", 1]]], ["Info", 3, [["tests", 1]]], ["Anglais", 1.5, [["tests", 1]]], ["LV2", 1.5, [["tests", 1]]], ["Sport", 1.5, [["tests", 1]]], ["Culture G", 1.5, [["tests", 1]]]];}
     else if(value=="blank"){subjects=[];}
 
+    notes=[];
+    localStorage.setItem("notes", JSON.stringify([]));
 
-    initialize();
-    calculAverage();
+    initialize(true);
 }
 
 function openCloseParameterMenu(){
@@ -82,7 +100,6 @@ function importData(){
 function cleanPage(){
     //console.log("clean page");
     initialize();
-    calculAverage();
 }
 
 function retrieveNotes(retrievedNotes){
@@ -299,9 +316,13 @@ function inputModified(element){
 }
 
 function initialize(firstTime=false){
+    tempNotes=notes;
+
     objects=[];
     notes=[];
     document.getElementById("tables").innerHTML="";
+    if(firstTime){
+        document.getElementById("modifysubjectsBox").innerHTML="";}
 
     var cssFile=document.createElement("link");
     cssFile.href="style.css";
@@ -371,6 +392,28 @@ function initialize(firstTime=false){
         document.getElementById("tables").appendChild(column);
 
         notes.push(notesArray);
+
+        if(firstTime){
+            let parametersDiv=document.createElement("div");
+            parametersDiv.classList.add("subjectModifyingBox");
+            let subjectNameBox=document.createElement("div");
+            subjectNameBox.id="idSubject;"+k;
+
+            let subjectName=document.createElement("input");
+            subjectName.value=subjects[k][0];
+            subjectName.addEventListener("input", element => modifiedSubject(element));
+            let subjectCoeff=document.createElement("input");
+            subjectCoeff.value=subjects[k][1];
+            subjectCoeff.style.width="40px";
+            subjectCoeff.addEventListener("input", element => modifiedSubject(element));
+
+            subjectNameBox.appendChild(document.createTextNode("Nom de la Matière : "));
+            subjectNameBox.appendChild(subjectName);
+            subjectNameBox.appendChild(document.createTextNode("   Coeff : "));
+            subjectNameBox.appendChild(subjectCoeff);
+            parametersDiv.appendChild(subjectNameBox);
+            document.getElementById("modifysubjectsBox").appendChild(parametersDiv);
+        }
     }
     
     if(isMobileBrowser==true){
@@ -396,6 +439,8 @@ function initialize(firstTime=false){
         document.getElementById("firstLine").style.height="100px";
         document.getElementById("parameterButton").style.height="80px";
         document.getElementById("parameterButton").style.width="80px";
+
+        document.getElementById("parametersBox").style.width="90%";
     }
 
     document.getElementById("cleanButton").addEventListener("click", cleanPage);
@@ -405,7 +450,9 @@ function initialize(firstTime=false){
     document.getElementById("preSelectionMenu").addEventListener("change", changePreselection);
     document.getElementById("addNewSubjectButton").addEventListener("click", addNewSubject)
 
+    retrieveNotes(tempNotes);
     if(firstTime){retrieveNotes(JSON.parse(localStorage.getItem("notes")));}
+    calculAverage();
 
     console.log(objects, notes);
 }

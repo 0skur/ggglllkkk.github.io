@@ -78,7 +78,7 @@ th{
 #parametersBox{
     z-index: 1;
     position: absolute;
-    height: 80%;
+    height: 100%;
     width: 30%;
     background-color: #16161d;
     top: 0px;
@@ -87,7 +87,7 @@ th{
     color: white;
     display: flex;
     flex-flow: column;
-    row-gap: 5px;
+    gap: 5px;
 }
 
 #createNewSubjectBox{
@@ -96,8 +96,15 @@ th{
     height: 20px;
 }
 
+#modifysubjectsBox{
+    display: flex;
+    flex-flow: column;
+    gap: 5px;
+}
+
 .column{
     border: 1px solid black;
+    padding: 3px;
 }
 
 .subjectOutOf20{
@@ -110,4 +117,10 @@ th{
     align-items: flex-start;
     justify-content: space-evenly;
     flex-flow: row;
+}
+
+.subjectModifyingBox{
+    align-items: center;
+    border: 1px solid white;
+    padding: 3px;
 }
