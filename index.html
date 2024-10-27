@@ -27,9 +27,20 @@
             </div>
 
             <dialog id="dialogBox"></dialog>
+        </div>
 
-            <div id="parametersBox">
-                
+        <div id="parametersBox">
+            <div>
+                Préselection
+                <select name="parametersPreselection" id="preSelectionMenu" height="20px">
+                    <option value="CPPV">CPPV</option>
+                    <option value="blank">vide</option>
+                </select>
+            </div>
+            <div id="createNewSubjectBox">
+                <input type="text" id="newSubjectName" placeholder="nom de la matière">
+                <input type="text" id="newSubjectCoeff" placeholder="coefficient de la matière">
+                <input type="image" src="plusButton.png" id="addNewSubjectButton">
             </div>
         </div>
 

@@ -22,9 +22,36 @@ for(i=1;i<99;i++){
     anglesList.push(anglesList[anglesList.length-1]+rotateDegree);
 }
 anglesList.push(360);
+var isParameterMenuOpen=true;
 
-function turnObject(){
-    document.getElementById("parameterButton").style.transform="rotate("+String(anglesList[currentAngle])+"deg)";
+
+function addNewSubject(){
+    subjects.push([document.getElementById("newSubjectName").value, parseFloat(document.getElementById("newSubjectCoeff")), []]);
+
+    initialize();
+    calculAverage();
+}
+
+function changePreselection(){
+    let value=document.getElementById("preSelectionMenu").value
+    if(value=="CPPV"){subjects=[["Maths", 7, [["DS", 4], ["Tests", 1, 5]]], ["Physique", 7, [["DS", 4], ["Tests", 1]]], ["Chimie", 4, [["tests", 1]]], ["Bio", 3, [["tests", 1]]], ["Info", 3, [["tests", 1]]], ["Anglais", 1.5, [["tests", 1]]], ["LV2", 1.5, [["tests", 1]]], ["Sport", 1.5, [["tests", 1]]], ["Culture G", 1.5, [["tests", 1]]]];}
+    else if(value=="blank"){subjects=[];}
+
+
+    initialize();
+    calculAverage();
+}
+
+function openCloseParameterMenu(){
+    var paramBox=document.getElementById("parametersBox")
+    if(isParameterMenuOpen==false){
+        paramBox.style.right=String(-paramBox.offsetWidth*((anglesList[currentAngle]/360)))+"px";
+        document.getElementById("parameterButton").style.transform="rotate("+String(-anglesList[currentAngle])+"deg)";
+    }
+    else{
+        paramBox.style.right=String(paramBox.offsetWidth*((anglesList[currentAngle]/360)-1))+"px";
+        document.getElementById("parameterButton").style.transform="rotate("+String(anglesList[currentAngle])+"deg)";
+    }
     currentAngle+=1;
 }
 
@@ -32,9 +59,10 @@ function changeParameters(){
     temp=setTimeout(";");
     for(i=0;i<=temp;i++){clearInterval(i);clearTimeout(i);}
 
+    isParameterMenuOpen=!isParameterMenuOpen;
     currentAngle=0;
-    a=setInterval(turnObject, 10);
-    setTimeout(()=>clearInterval(a), 1600);
+    a=setInterval(openCloseParameterMenu, 10);
+    setTimeout(()=>clearInterval(a), 2000);
 }
 
 function exportData(){
@@ -45,7 +73,7 @@ function exportData(){
 }
 
 function importData(){
-    initialize(false);
+    initialize();
     retrieveNotes(JSON.parse(document.getElementById("dataToImport").value));
     document.getElementById("dataToImport").value="";
     calculAverage();
@@ -53,7 +81,7 @@ function importData(){
 
 function cleanPage(){
     //console.log("clean page");
-    initialize(false);
+    initialize();
     calculAverage();
 }
 
@@ -270,7 +298,7 @@ function inputModified(element){
     calculAverage();
 }
 
-function initialize(firstTime){
+function initialize(firstTime=false){
     objects=[];
     notes=[];
     document.getElementById("tables").innerHTML="";
@@ -374,6 +402,8 @@ function initialize(firstTime){
     document.getElementById("importDataButton").addEventListener("click", importData);
     document.getElementById("exportDataButton").addEventListener("click", exportData);
     document.getElementById("parameterButton").addEventListener("click", changeParameters);
+    document.getElementById("preSelectionMenu").addEventListener("change", changePreselection);
+    document.getElementById("addNewSubjectButton").addEventListener("click", addNewSubject)
 
     if(firstTime){retrieveNotes(JSON.parse(localStorage.getItem("notes")));}
 
