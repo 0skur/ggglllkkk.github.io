@@ -442,7 +442,7 @@ function initialize(firstTime=false){
         document.getElementById("parameterButton").style.height="80px";
         document.getElementById("parameterButton").style.width="80px";
 
-        document.getElementById("parametersBox").style.width="90%";
+        document.getElementById("parametersBox").style.width="95%";
         document.getElementById("parametersBox").style.fontSize="20px";
         document.getElementById("parametersBox").style.paddingTop="70px";
         document.getElementById("createNewSubjectBox").style.height="50px";
