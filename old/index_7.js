@@ -29,93 +29,6 @@ anglesList.push(360);
 
 
 
-function createNewParameterBoxSubSubject(k,i){
-    let subSubjectBox=document.createElement("div");
-    subSubjectBox.id="idSubSubjectBox;"+k+";"+i;
-
-    let subSubjectOrder=document.createElement("select");
-    subSubjectOrder.classList.add("changeSubSubjectOrder");
-    subSubjectOrder.style.color="#16161d";
-    subSubjectOrder.style.width="50px";
-    for (let j in subjects[k][2]){
-        let tempOption=document.createElement("option");
-        tempOption.value=parseInt(j);
-        tempOption.innerHTML=parseInt(j)+1;
-        if(j==i){tempOption.selected=true;}
-        subSubjectOrder.appendChild(tempOption);
-    }
-    subSubjectOrder.addEventListener("change", element=> modifiedSubSubject(element));
-
-    let subSubjectName=document.createElement("input");
-    subSubjectName.value=subjects[k][2][i][0];
-    subSubjectName.classList.add("changeSubSubjectNameInput");
-    subSubjectName.addEventListener("input", element=> modifiedSubSubject(element));
-
-    let subSubjectCoeff=document.createElement("input");
-    subSubjectCoeff.value=subjects[k][2][i][1];
-    subSubjectCoeff.classList.add("changeSubSubjectCoeff");
-    subSubjectCoeff.style.width="40px";
-    if(isMobileBrowser){subSubjectCoeff.style.width="80px"};
-    subSubjectCoeff.addEventListener("input", element=> modifiedSubSubject(element));
-
-    let subSubjectOn=document.createElement("input");
-    if(subjects[k][2][i][2]){subSubjectOn.value=subjects[k][2][i][2];}
-    //else{subSubjectOn.value=20;}
-    subSubjectOn.placeholder="20";
-    subSubjectOn.classList.add("changeSubSubjectOn");
-    subSubjectOn.style.width="40px";
-    if(isMobileBrowser){subSubjectOn.style.width="80px"};
-    subSubjectOn.addEventListener("input", element=> modifiedSubSubject(element));
-
-    subSubjectBox.appendChild(subSubjectOrder);
-    subSubjectBox.appendChild(document.createTextNode("   Catégorie: "));
-    subSubjectBox.appendChild(subSubjectName);
-    subSubjectBox.appendChild(document.createTextNode("   Coeff : "));
-    subSubjectBox.appendChild(subSubjectCoeff);
-    subSubjectBox.appendChild(document.createTextNode("   Note sur : "));
-    subSubjectBox.appendChild(subSubjectOn);
-
-    return subSubjectBox
-}
-
-function createNewParameterBoxSubject(k){
-    let subjectNameBox=document.createElement("div");
-    subjectNameBox.id="idSubject;"+k;
-
-    let subjectOrder=document.createElement("select");
-    subjectOrder.classList.add("changeSubjectOrder");
-    subjectOrder.style.color="#16161d";
-    subjectOrder.style.width="50px";
-    for(let i in subjects){
-        let tempOption=document.createElement("option");
-        tempOption.value=parseInt(i);
-        tempOption.innerHTML=parseInt(i)+1;
-        if(i==k){tempOption.selected=true;}
-        subjectOrder.appendChild(tempOption);
-    }
-    subjectOrder.addEventListener("change", element=> modifiedSubject(element));
-
-    let subjectName=document.createElement("input");
-    subjectName.value=subjects[k][0];
-    subjectName.classList.add("changeSubjectNameInput");
-    subjectName.addEventListener("input", element=> modifiedSubject(element));
-
-    let subjectCoeff=document.createElement("input");
-    subjectCoeff.value=subjects[k][1];
-    subjectCoeff.classList.add("changeSubjectCoeffInput");
-    subjectCoeff.style.width="40px";
-    if(isMobileBrowser){subjectCoeff.style.width="80px";}
-    subjectCoeff.addEventListener("input", element=> modifiedSubject(element));
-
-    subjectNameBox.appendChild(subjectOrder);
-    subjectNameBox.appendChild(document.createTextNode("   Nom de la Matière : "));
-    subjectNameBox.appendChild(subjectName);
-    subjectNameBox.appendChild(document.createTextNode("   Coeff : "));
-    subjectNameBox.appendChild(subjectCoeff);
-
-    return subjectNameBox;
-}
-
 function modifiedSubSubject(element){
     console.log(element);
     let boxId=element.target.parentNode.id;
@@ -169,10 +82,7 @@ function addNewSubject(){
 
     console.log(subjects)
 
-    let parametersDiv=document.createElement("div");
-    parametersDiv.classList.add("subjectModifyingBox");
-    parametersDiv.appendChild(createNewParameterBoxSubject(subjects.length-1));
-    document.getElementById("modifySubjectsBox").appendChild(parametersDiv);
+    
 
     initialize();
 }
@@ -451,7 +361,7 @@ function initialize(firstTime=false){
     notes=[];
     document.getElementById("tables").innerHTML="";
     if(firstTime){
-        document.getElementById("modifySubjectsBox").innerHTML="";}
+        document.getElementById("modifysubjectsBox").innerHTML="";}
 
     var cssFile=document.createElement("link");
     cssFile.href="style.css";
@@ -525,16 +435,93 @@ function initialize(firstTime=false){
         if(firstTime){
             let parametersDiv=document.createElement("div");
             parametersDiv.classList.add("subjectModifyingBox");
-            parametersDiv.appendChild(createNewParameterBoxSubject(k));
+            let subjectNameBox=document.createElement("div");
+            subjectNameBox.id="idSubject;"+k;
+
+            let subjectOrder=document.createElement("select");
+            subjectOrder.classList.add("changeSubjectOrder");
+            subjectOrder.style.color="#16161d";
+            subjectOrder.style.width="50px";
+            for(let i in subjects){
+                let tempOption=document.createElement("option");
+                tempOption.value=parseInt(i);
+                tempOption.innerHTML=parseInt(i)+1;
+                if(i==k){tempOption.selected=true;}
+                subjectOrder.appendChild(tempOption);
+            }
+            subjectOrder.addEventListener("change", element=> modifiedSubject(element));
+
+            let subjectName=document.createElement("input");
+            subjectName.value=subjects[k][0];
+            subjectName.classList.add("changeSubjectNameInput");
+            subjectName.addEventListener("input", element=> modifiedSubject(element));
+
+            let subjectCoeff=document.createElement("input");
+            subjectCoeff.value=subjects[k][1];
+            subjectCoeff.classList.add("changeSubjectCoeffInput");
+            subjectCoeff.style.width="40px";
+            if(isMobileBrowser){subjectCoeff.style.width="80px";}
+            subjectCoeff.addEventListener("input", element=> modifiedSubject(element));
+
+            subjectNameBox.appendChild(subjectOrder);
+            subjectNameBox.appendChild(document.createTextNode("   Nom de la Matière : "));
+            subjectNameBox.appendChild(subjectName);
+            subjectNameBox.appendChild(document.createTextNode("   Coeff : "));
+            subjectNameBox.appendChild(subjectCoeff);
+            parametersDiv.appendChild(subjectNameBox);
 
             let subSubjectsBox=document.createElement("div");
             subSubjectsBox.style.marginLeft="50px";
             for(let i in subjects[k][2]){
-                subSubjectsBox.appendChild(createNewParameterBoxSubSubject(k,i));
+                let subSubjectBox=document.createElement("div");
+                subSubjectBox.id="idSubSubjectBox;"+k+";"+i;
+
+                let subSubjectOrder=document.createElement("select");
+                subSubjectOrder.classList.add("changeSubSubjectOrder");
+                subSubjectOrder.style.color="#16161d";
+                subSubjectOrder.style.width="50px";
+                for (let j in subjects[k][2]){
+                    let tempOption=document.createElement("option");
+                    tempOption.value=parseInt(j);
+                    tempOption.innerHTML=parseInt(j)+1;
+                    if(j==i){tempOption.selected=true;}
+                    subSubjectOrder.appendChild(tempOption);
+                }
+                subSubjectOrder.addEventListener("change", element=> modifiedSubSubject(element));
+
+                let subSubjectName=document.createElement("input");
+                subSubjectName.value=subjects[k][2][i][0];
+                subSubjectName.classList.add("changeSubSubjectNameInput");
+                subSubjectName.addEventListener("input", element=> modifiedSubSubject(element));
+
+                let subSubjectCoeff=document.createElement("input");
+                subSubjectCoeff.value=subjects[k][2][i][1];
+                subSubjectCoeff.classList.add("changeSubSubjectCoeff");
+                subSubjectCoeff.style.width="40px";
+                if(isMobileBrowser){subSubjectCoeff.style.width="80px"};
+                subSubjectCoeff.addEventListener("input", element=> modifiedSubSubject(element));
+
+                let subSubjectOn=document.createElement("input");
+                if(subjects[k][2][i][2]){subSubjectOn.value=subjects[k][2][i][2];}
+                //else{subSubjectOn.value=20;}
+                subSubjectOn.placeholder="20";
+                subSubjectOn.classList.add("changeSubSubjectOn");
+                subSubjectOn.style.width="40px";
+                if(isMobileBrowser){subSubjectOn.style.width="80px"};
+                subSubjectOn.addEventListener("input", element=> modifiedSubSubject(element));
+
+                subSubjectBox.appendChild(subSubjectOrder);
+                subSubjectBox.appendChild(document.createTextNode("   Catégorie: "));
+                subSubjectBox.appendChild(subSubjectName);
+                subSubjectBox.appendChild(document.createTextNode("   Coeff : "));
+                subSubjectBox.appendChild(subSubjectCoeff);
+                subSubjectBox.appendChild(document.createTextNode("   Note sur : "));
+                subSubjectBox.appendChild(subSubjectOn);
+                subSubjectsBox.appendChild(subSubjectBox);
                 parametersDiv.appendChild(subSubjectsBox);
             }
 
-            document.getElementById("modifySubjectsBox").appendChild(parametersDiv);
+            document.getElementById("modifysubjectsBox").appendChild(parametersDiv);
         }
     }
     
