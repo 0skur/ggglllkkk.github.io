@@ -85,7 +85,7 @@ th{
     right: 0px;
     padding: 5px;
     color: white;
-    display: flex;
+    display: none;
     flex-flow: column;
     gap: 5px;
 }
@@ -123,4 +123,10 @@ th{
     align-items: center;
     border: 1px solid white;
     padding: 3px;
+}
+
+.addSubSubjectBox{
+    display: inline-flex;
+    align-items: stretch;
+    height: 20px;
 }
