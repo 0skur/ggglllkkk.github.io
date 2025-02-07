@@ -3,12 +3,13 @@
 <html>
     <head>
         <title>Calcul de la moyenne</title>
-        <meta charset="utf-8"/> 
+        <meta charset="utf-8"/>
+        <link rel="icon" type="image/x-icon" href="data/favicon.ico">
     </head>
     <body>
         <div id="firstLine">
             <h1>Calcul de la moyenne</h1>
-            <img src="gear.png" id="parameterButton">
+            <img src="data/gear.png" id="parameterButton">
         </div>
        
         <div id="mainBody">
@@ -24,6 +25,7 @@
                 <input type="text" placeholder="données à importer" id="dataToImport">
                 <button id="importDataButton">importer données</button>
                 <button id="exportDataButton">exporter données</button>
+                <input id="infoButton" type="image" src="data/info.png" height="15px">
             </div>
 
             <dialog id="dialogBox"></dialog>
@@ -41,7 +43,7 @@
             <div id="createNewSubjectBox">
                 <input type="text" id="newSubjectName" placeholder="nom de la matière">
                 <input type="text" id="newSubjectCoeff" placeholder="coeff de la matière">
-                <input type="image" src="plusButton.png" id="addNewSubjectButton">
+                <input type="image" src="data/plusButton.png" id="addNewSubjectButton">
             </div>
             <div id="modifySubjectsBox"></div>
         </div>

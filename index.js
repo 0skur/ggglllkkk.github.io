@@ -28,6 +28,12 @@ for(i=1;i<99;i++){
 anglesList.push(360);
 
 
+function showInfo(){
+    document.getElementById("dialogBox").innerHTML="Cet outil de calcul de la moyenne s'appuie sur des coefficients pouvant ne pas être représentatifs de la réalité, la moyenne ainsi calculée peut donc ne pas valoir celle calculée officiellement.";
+    document.getElementById("dialogBox").show();
+    setTimeout(()=> document.getElementById("dialogBox").close(), 5000);
+}
+
 
 function addNewSubSubject(element){
     console.log(element)
@@ -69,7 +75,7 @@ function createNewParameterBoxAddSubjectBox(k){
 
     let newSubSubjectButton=document.createElement("input");
     newSubSubjectButton.type="image";
-    newSubSubjectButton.src="plusButton.png";
+    newSubSubjectButton.src="data/plusButton.png";
     newSubSubjectButton.addEventListener("click", element=> addNewSubSubject(element));
 
     addSubSubjectBox.appendChild(newSubSubjectName);
@@ -611,6 +617,7 @@ function initialize(firstTime=false){
         document.getElementById("cleanButton").style.fontSize="30px";
         document.getElementById("importDataButton").style.fontSize="20px";
         document.getElementById("exportDataButton").style.fontSize="20px";
+        document.getElementById("infoButton").style.height="30px";
         document.getElementById("dialogBox").style.fontSize="20px";
 
         document.getElementById("mainBody").style.top="10pt";
@@ -638,6 +645,7 @@ function initialize(firstTime=false){
     document.getElementById("cleanButton").addEventListener("click", cleanPage);
     document.getElementById("importDataButton").addEventListener("click", importData);
     document.getElementById("exportDataButton").addEventListener("click", exportData);
+    document.getElementById("infoButton").addEventListener("click", showInfo)
     document.getElementById("parameterButton").addEventListener("click", changeParameters);
     document.getElementById("preSelectionMenu").addEventListener("change", changePreselection);
     document.getElementById("addNewSubjectButton").addEventListener("click", addNewSubject)
