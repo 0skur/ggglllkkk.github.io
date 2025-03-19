@@ -7,45 +7,14 @@
         <link rel="icon" type="image/x-icon" href="data/favicon.ico">
     </head>
     <body>
-        <div id="firstLine">
-            <h1>Calcul de la moyenne</h1>
-            <img src="data/gear.png" id="parameterButton">
-        </div>
-       
-        <div id="mainBody">
-            <button id="cleanButton">nettoyer</button>
+        <h1>Calcul de la moyenne</h1>
 
-            <div id="tables"></div>
+        <button id="cleanButton">Nettoyer</button>
+        
+        <div id="tableDiv">
 
-            <text id="errorMessages"></text><br>
-            <text id="average"></text><text id="outOf20">/20</text>
-            <text id="test"></text>
 
-            <div id="dataOptions">
-                <input type="text" placeholder="données à importer" id="dataToImport">
-                <button id="importDataButton">importer données</button>
-                <button id="exportDataButton">exporter données</button>
-                <input id="infoButton" type="image" src="data/info.png" height="15px">
-            </div>
 
-            <dialog id="dialogBox"></dialog>
-        </div>
-
-        <div id="parametersBox">
-            <div id="preselectionBox">
-                Préselection
-                <select name="parametersPreselection" id="preSelectionMenu" height="20px">
-                    <option value="0" selected>CPPV</option>
-                    <option value="1">vide</option>
-                    <option value="-1">personnalisé</option>
-                </select>
-            </div>
-            <div id="createNewSubjectBox">
-                <input type="text" id="newSubjectName" placeholder="nom de la matière">
-                <input type="text" id="newSubjectCoeff" placeholder="coeff de la matière">
-                <input type="image" src="data/plusButton.png" id="addNewSubjectButton">
-            </div>
-            <div id="modifySubjectsBox"></div>
         </div>
 
         <script language="javascript" src="index.js"></script>
