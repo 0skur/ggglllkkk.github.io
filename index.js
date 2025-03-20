@@ -1,6 +1,30 @@
 var subjects=[["Maths", 7, [["DS", 4], ["Tests", 1, 5]]], ["Physique", 7, [["DS", 4], ["Tests", 1]]], ["Chimie", 4, [["DS", 4], ["tests", 1]]], ["Bio", 3, [["DS", 4], ["tests", 1]]], ["Info", 3, [["tests", 1]]], ["Anglais", 1.5, [["tests", 1]]], ["LV2", 1.5, [["tests", 1]]], ["Sport", 1.5, [["tests", 1]]], ["Eco", 1.5, [["tests", 1]]]];
 var notes=[]
 var globalOutOf=20;
+var colorsCoeff = [[0.341328, -10.68, 64.6337, 254.862353], [-0.2791, 6.19454, -12.306, -1.4046463], [-0.1835, 6.657, -46.6007, 4.32]];
+var strongColors = false;
+
+// calculates the note's according color
+function calculAverageColor(note){
+    var colors = [];
+
+    for (let k in colorsCoeff){
+        var color = 0
+        for (let n in colorsCoeff[k]){
+            color+=colorsCoeff[k][n]*Math.pow(note, colorsCoeff[k].length-n-1);
+        }
+        colors.push(color);
+    }
+
+    return "rgb("+colors[0]+","+colors[1]+","+colors[2]+")";
+}
+
+// changes the color strength
+function changeColorStrength(){
+    strongColors = !strongColors;
+    calculAverage();
+}
+
 
 // cleans the page
 function cleanPage(){
@@ -41,10 +65,12 @@ function calculAverage(){
                         noteOn = currentNote[1];
                         currentNote = currentNote[0];
                     }
-                    normalizedNote = parseFloat(currentNote)*100/parseFloat(noteOn);
-                    subSubjectAvg+=normalizedNote;
-                    numberOfNotes++;
-                    subSubjectAvgModified=true;
+                    if(currentNote<=noteOn){
+                        normalizedNote = parseFloat(currentNote)*100/parseFloat(noteOn);
+                        subSubjectAvg+=normalizedNote;
+                        numberOfNotes++;
+                        subSubjectAvgModified=true;
+                    }
                 }
             }
 
@@ -54,7 +80,7 @@ function calculAverage(){
                 subjectAvg+=subSubjectAvg*parseFloat(subjects[k][2][n][1]);
                 subjectCoeffSum+=parseFloat(subjects[k][2][n][1]);
                 subjectAvgModified=true;
-                console.log("subsub", subSubjectAvg);
+                //console.log("subsub", subSubjectAvg);
             }
         }
         
@@ -66,20 +92,30 @@ function calculAverage(){
             avg+=subjectAvg*parseFloat(subjects[k][1]);
             coeffSum+=parseFloat(subjects[k][1]);
             avgModified=true;
-            console.log("sub", subjectAvg, subjectCoeffSum);
+            //console.log("sub", subjectAvg, subjectCoeffSum);
             
 
             subjectAverageDivChildNodes[0].innerHTML=(subjectAvg*globalOutOf/100).toFixed(2);
             subjectAverageDivChildNodes[0].visibility="visible";
             subjectAverageDivChildNodes[1].visibility="visible";
+            if(!strongColors){
+                subjectAverageDivChildNodes[0].style.color = calculAverageColor(subjectAvg*globalOutOf/100);
+                document.getElementById("tableDiv").childNodes[k].style.backgroundColor="transparent";
+            }
+            else{
+                document.getElementById("tableDiv").childNodes[k].style.backgroundColor=calculAverageColor(subjectAvg*globalOutOf/100);
+                subjectAverageDivChildNodes[0].style.color = "rgb(0,0,0)";
+            }
         }
         else{
             subjectAverageDivChildNodes[0].visibility="collapse";
             subjectAverageDivChildNodes[1].visibility="collapse";
+            subjectAverageDivChildNodes[0].style.color = "rgb(0,0,0)";
+            document.getElementById("tableDiv").childNodes[k].style.backgroundColor="transparent";
         }
     }
 
-    console.log("avg", avg, coeffSum);
+    //console.log("avg", avg, coeffSum);
 
     // calculates the average and modifies the average panel accordingly
     var avgTextField = document.getElementById("average");
@@ -88,15 +124,25 @@ function calculAverage(){
         avg/=coeffSum;
         avg/=100/globalOutOf;
 
-        console.log("moyenne", avg);
+        //console.log("moyenne", avg);
         
         avgTextField.innerHTML=avg.toFixed(2);
         avgTextField.style.visibility = "visible";
         outOfTextField.style.visibility = "visible";
+        if(!strongColors){
+            avgTextField.style.color = calculAverageColor(avg);
+            document.body.style.backgroundColor="transparent";
+        }
+        else{
+            document.body.style.backgroundColor=calculAverageColor(avg);
+            avgTextField.style.color = "rgb(0,0,0)";
+        }
     }
     else{
         avgTextField.style.visibility = "collapse";
         outOfTextField.style.visibility = "collapse";
+        avgTextField.style.color = "rgb(0,0,0)";
+        document.body.style.backgroundColor="transparent";
     }
 
 }
@@ -223,6 +269,7 @@ function buildTable(){
 
         var subjectAverageDiv = document.createElement("div");
         subjectAverageDiv.classList.add("subjectAverageDiv");
+        subjectAverageDiv.style.gridColumn = parseInt(subjects[k][2].length);
 
         var subjectAvg=document.createElement("text");
         subjectAvg.classList.add("subjectAverage");
@@ -256,6 +303,8 @@ function initialize(){
     document.getElementsByTagName("head")[0].appendChild(cssFile);
 
     document.getElementById("cleanButton").addEventListener("click", cleanPage);
+    document.getElementById("strongColorsButton").addEventListener("click", changeColorStrength);
+    document.getElementById("strongColorsButton").value = "off";
 
     loadNotes(JSON.parse(localStorage.getItem("notes")));
 
