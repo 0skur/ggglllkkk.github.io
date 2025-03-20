@@ -1,3 +1,9 @@
+@charset "utf-8";
+@font-face {
+    font-family: clementN;
+    src: url(data/clementnumbers-regular.ttf);
+}
+
 body{
     display: flex;
     flex-direction: column;
@@ -29,6 +35,11 @@ body{
     border: 1px solid black;
 }
 
+.subjectAverage{
+    font-size: 20px;
+    font-family: "clementN"
+}
+
 #tableDiv{
     display: flex;
     justify-content: space-evenly;
@@ -40,4 +51,13 @@ body{
 
 #cleanButton{
     width: 5%;
+}
+
+#average{
+    font-size: 200px;
+    font-family: clementN;
+}
+
+#outOf{
+    font-size: xx-large;
 }
