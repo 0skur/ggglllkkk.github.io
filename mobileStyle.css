@@ -1,0 +1,64 @@
+body{
+    row-gap: 5px;
+    font-size: xx-large;
+    padding-bottom: 200px;
+}
+
+.column{
+    padding: 20px;
+    border: 1px solid black;
+    column-gap: 10px;
+    row-gap: 10px;
+}
+
+.inputBox{
+    min-width: 100px;
+    max-width: 200px;
+    max-height: 50px;
+    font-size: xx-large;
+}
+
+.subSubjectHeader{
+    border: 1px solid black;
+}
+
+.subjectAverage{
+    font-size: xx-large;
+}
+
+#tableDiv{
+    column-gap: 20px;
+    row-gap: 20px;
+}
+
+#cleanButton{
+    font-size: xx-large;
+}
+
+#average{
+    font-size: 200px;
+}
+
+#outOf{
+    font-size: xx-large;
+}
+
+#dataOptions{
+    bottom: 20px;
+    left: 5px;
+    font-size: xx-large;
+    height: 100px;
+}
+
+#importDataInput, #importDataButton, #exportDataButton{
+    font-size: 20px;
+}
+
+#disclaimerText{
+    font-size: 20px;
+}
+
+#strongColorsButton{
+    width: 30px;
+    height: 30px;
+}

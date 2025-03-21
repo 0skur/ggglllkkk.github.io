@@ -1,0 +1,45 @@
+body{
+    row-gap: 5px;
+}
+
+.column{
+    padding: 3px;
+    border: 1px solid black;
+    column-gap: 10px;
+    row-gap: 10px;
+}
+
+.inputBox{
+    min-width: 50px;
+    max-width: 100px;
+    max-height: 20px;
+}
+
+.subSubjectHeader{
+    border: 1px solid black;
+}
+
+.subjectAverage{
+    font-size: 20px;
+}
+
+#tableDiv{
+    column-gap: 20px;
+    row-gap: 20px;
+}
+
+#cleanButton{
+}
+
+#average{
+    font-size: 200px;
+}
+
+#outOf{
+    font-size: xx-large;
+}
+
+#dataOptions{
+    bottom: 5px;
+    left: 5px;
+}
