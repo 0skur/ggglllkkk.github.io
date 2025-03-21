@@ -1,34 +1,18 @@
-@charset "utf-8";
-@font-face {
-    font-family: clementN;
-    src: url(data/clementnumbers-regular.ttf);
-}
-
 body{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
     row-gap: 5px;
 }
 
 .column{
     padding: 3px;
     border: 1px solid black;
-    display: grid;
     column-gap: 10px;
-    /*grid-template-rows: repeat(1, 1fr);*/
-    grid-auto-rows: min-content;
     row-gap: 10px;
-    text-align: center;
-    flex-grow: 0;
 }
 
 .inputBox{
     min-width: 50px;
     max-width: 100px;
     max-height: 20px;
-    text-align: center;
-    align-self: start;
 }
 
 .subSubjectHeader{
@@ -37,25 +21,18 @@ body{
 
 .subjectAverage{
     font-size: 20px;
-    font-family: "clementN"
 }
 
 #tableDiv{
-    display: flex;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-    align-items: flex-start;
     column-gap: 20px;
     row-gap: 20px;
 }
 
 #cleanButton{
-    width: 5%;
 }
 
 #average{
     font-size: 200px;
-    font-family: clementN;
 }
 
 #outOf{
@@ -63,7 +40,6 @@ body{
 }
 
 #dataOptions{
-    position: fixed;
     bottom: 5px;
     left: 5px;
 }
