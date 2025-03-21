@@ -1,8 +1,22 @@
-var subjects=[["Maths", 7, [["DS", 4], ["Tests", 1, 5]]], ["Physique", 7, [["DS", 4], ["Tests", 1]]], ["Chimie", 4, [["DS", 4], ["tests", 1]]], ["Bio", 3, [["DS", 4], ["tests", 1]]], ["Info", 3, [["tests", 1]]], ["Anglais", 1.5, [["tests", 1]]], ["LV2", 1.5, [["tests", 1]]], ["Sport", 1.5, [["tests", 1]]], ["Eco", 1.5, [["tests", 1]]]];
+var subjects=[["Maths", 7, [["DS", 4], ["tests", 1, 5]]], ["Physique", 7, [["DS", 4], ["tests", 1]]], ["Chimie", 4, [["DS", 4], ["tests", 1]]], ["Bio", 3, [["DS", 4], ["tests", 1]]], ["Info", 3, [["tests", 1]]], ["Anglais", 1.5, [["tests", 1]]], ["LV2", 1.5, [["tests", 1]]], ["Sport", 1.5, [["tests", 1]]], ["Eco", 1.5, [["tests", 1]]]];
 var notes=[]
 var globalOutOf=20;
 var colorsCoeff = [[0.341328, -10.68, 64.6337, 254.862353], [-0.2791, 6.19454, -12.306, -1.4046463], [-0.1835, 6.657, -46.6007, 4.32]];
 var strongColors = false;
+
+
+// exports the current data to the clipboard
+function exportData(){
+    navigator.clipboard.writeText(JSON.stringify(notes));
+    document.getElementById("exportDataButton").innerHTML="données copiées";
+}
+
+// imports the data placed in the data input
+function importData(){
+    var data = document.getElementById("importDataInput").value;
+    var hasNotesBeenLoaded = loadNotes(JSON.parse(data));
+    document.getElementById("importDataInput").value="";
+}
 
 // calculates the note's according color
 function calculAverageColor(note){
@@ -28,7 +42,7 @@ function changeColorStrength(){
 
 // cleans the page
 function cleanPage(){
-    loadNotes(-1);
+    loadNotes([]);
     buildTable();
 }
 
@@ -149,9 +163,31 @@ function calculAverage(){
 
 
 // loads the saved notes or creates the notes table
-function loadNotes(givenNotes=-1){
-    if (givenNotes!=-1){
+function loadNotes(givenNotes){
+    if(givenNotes==null){givenNotes=[];}
+
+    // checks if the given notes format is the good one
+    var isNotesFormatCorrect=true;
+    if (subjects.length!=givenNotes.length){isNotesFormatCorrect = false;}
+    else{
+       for (let k in subjects){
+           if(subjects[k][2].length!=givenNotes[k].length){for(let i=0; i<subjects[k][2].length-givenNotes[k].length; i++){givenNotes[k].push([])};}
+           else{
+            for(let n in givenNotes[k]){
+                if(givenNotes[k][n].length==0){givenNotes[k][n].push("");}
+            }
+           }
+       }
+    }
+    /*if (subjects.length!=data.length){isNotesFormatCorrect = false;}
+    for (let k in subjects){
+        console.log(subjects[k][2], data[k]);
+        if(subjects[k][2].length!=data[k].length){isNotesFormatCorrect = false;}
+    }*/
+
+    if (isNotesFormatCorrect){
         notes=givenNotes;
+        buildTable();
     }
     else{
         notes=[];
@@ -164,7 +200,7 @@ function loadNotes(givenNotes=-1){
     }
     localStorage.setItem("notes", JSON.stringify(notes));
 
-    console.log("notes loaded", notes);
+    return isNotesFormatCorrect;
 }
 
 // called when an input is modified
@@ -212,6 +248,9 @@ function inputModified(element){
 
     // changes the color of the input if incorrect
     if (!isValueNumber){document.getElementById(targetedInput.id).style.backgroundColor = "red";}
+
+    // resets the import button text
+    document.getElementById("exportDataButton").innerHTML="exporter données";
 }
 
 // builds the average calcul table
@@ -295,6 +334,8 @@ function buildTable(){
 // initializes the page
 function initialize(){
 
+    strongColors = document.getElementById("strongColorsButton").value ;
+
     // loads the css stylesheet
     var cssFile=document.createElement("link");
     cssFile.href="computerStyle.css";
@@ -304,7 +345,8 @@ function initialize(){
 
     document.getElementById("cleanButton").addEventListener("click", cleanPage);
     document.getElementById("strongColorsButton").addEventListener("click", changeColorStrength);
-    document.getElementById("strongColorsButton").value = "off";
+    document.getElementById("importDataButton").addEventListener("click", importData);
+    document.getElementById("exportDataButton").addEventListener("click", exportData);
 
     loadNotes(JSON.parse(localStorage.getItem("notes")));
 
