@@ -24,7 +24,7 @@ function calculAverageColor(note){
     var colors = [];
 
     for (let k in colorsCoeff){
-        var color = 0
+        var color = 0;
         for (let n in colorsCoeff[k]){
             color+=colorsCoeff[k][n]*Math.pow(note, colorsCoeff[k].length-n-1);
         }
@@ -70,7 +70,7 @@ function calculAverage(){
 
                 // checks if the current note is a number and modifies the parametesr if the note is on a unusual number
                 var isNoteValue=true;
-                var isNoteOnUnusual = false;
+                var isNoteOnUnusual = false; 
                 for (let k in currentNote){isNoteValue &&="0123456789.,/".includes(currentNote[k]); isNoteOnUnusual ||="/".includes(currentNote[k]);}
 
                 // computes if there is a note
@@ -223,8 +223,27 @@ function inputModified(element){
     if (targetedSubject[2] == notes[targetedSubject[0]][targetedSubject[1]].length-1 && targetedSubject.value!=""){
         notes[targetedSubject[0]][targetedSubject[1]].push("");
         console.log("newline ?!")
-    }
 
+        // creates the input boxes and sets it up
+        var inputBox = document.createElement("input");
+        inputBox.classList.add("inputBox");
+        inputBox.style.gridColumn = parseInt(targetedSubject[1])+1;
+        inputBox.style.gridRow = 4+parseInt(targetedSubject[2]);
+        inputBox.type = "text";
+        inputBox.addEventListener("input", (element) => inputModified(element));
+        inputBox.addEventListener("change", (element) => inputModified(element));
+        inputBox.id = "idInput;"+targetedSubject[0]+";"+targetedSubject[1]+";"+parseInt(parseInt(targetedSubject[2])+1);
+
+        // creates the input box's placeholder
+        if(subjects[targetedSubject[0]][2][targetedSubject[1]].length==3){inputBox.placeholder = "/"+subjects[targetedSubject[0]][2][targetedSubject[1]][2];}
+        else{inputBox.placeholder = "/20";}
+
+        // adds the input to its column
+        if(targetedSubject[1]==subjects[targetedSubject[0]][2].length-1){targetedColumn.insertBefore(inputBox, targetedColumn.childNodes[targetedColumn.childNodes.length-1]);}
+        else{targetedColumn.insertBefore(inputBox, document.getElementById("subSubjectId;"+targetedSubject[0]+";"+parseInt(parseInt(targetedSubject[1])+1)));}
+    
+    }
+    
     // gets the last filled line
     var lastFilledLine = -1;
     i=notes[targetedSubject[0]][targetedSubject[1]].length-1;
@@ -238,14 +257,19 @@ function inputModified(element){
     console.log("csc", lastFilledLine, notes[targetedSubject[0]][targetedSubject[1]].length)
 
     // deletes all the other empty lines
+    for(let i=lastFilledLine+2; i<notes[targetedSubject[0]][targetedSubject[1]].length; i++){
+        console.log("FUUUUCK", "idInput;"+targetedSubject[0]+";"+targetedSubject[1]+";"+i)
+        document.getElementById("idInput;"+targetedSubject[0]+";"+targetedSubject[1]+";"+i).remove();
+    }
     notes[targetedSubject[0]][targetedSubject[1]].splice(lastFilledLine+1, notes[targetedSubject[0]][targetedSubject[1]].length-lastFilledLine-2);
-    
+
     // saves the changes to the notes
     localStorage.setItem("notes", JSON.stringify(notes));
 
     console.log(notes);
 
-    buildTable();
+    //buildTable();
+    calculAverage();
 
     // changes the color of the input if incorrect
     if (!isValueNumber){document.getElementById(targetedInput.id).style.backgroundColor = "red";}
@@ -282,6 +306,7 @@ function buildTable(){
         for (let n in subjects[k][2]){
             var subSubjectHeader = document.createElement("div");
             subSubjectHeader.classList.add("subSubjectHeader");
+            subSubjectHeader.id = "subSubjectId;"+k+";"+n;
             subSubjectHeader.style.gridRow = "2";
             subSubjectHeader.innerHTML = subjects[k][2][n][0]+", coeff: "+subjects[k][2][n][1];
             column.appendChild(subSubjectHeader);
