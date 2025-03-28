@@ -1,22 +1,87 @@
 var subjects=[["Maths", 7, [["DS", 4], ["tests", 1, 5]]], ["Physique", 7, [["DS", 4], ["tests", 1]]], ["Chimie", 4, [["DS", 4], ["tests", 1]]], ["Bio", 3, [["DS", 4], ["tests", 1]]], ["Info", 3, [["tests", 1]]], ["Anglais", 1.5, [["tests", 1]]], ["LV2", 1.5, [["tests", 1]]], ["Sport", 1.5, [["tests", 1]]], ["Eco", 1.5, [["tests", 1]]]];
 var notes=[]
+var notesOrder=[]
 var globalOutOf=20;
 var colorsCoeff = [[0.341328, -10.68, 64.6337, 254.862353], [-0.2791, 6.19454, -12.306, -1.4046463], [-0.1835, 6.657, -46.6007, 4.32]];
 var strongColors = false;
 var isMobileBrowser = false;
 
 
+// makes the average chart
+function makeAverageChart(){
+    
+    // chart variables
+    var xValues=[]
+    var yValues=[]
+    var minValue=20;
+    var maxValue=0;
+    var currentNotesArray=[]
+
+    // initializes the current notes array
+    for (let k in subjects){
+        currentNotesArray.push([]);
+        for (let n in subjects[k][2]){
+            currentNotesArray[k].push([]);
+        }
+    }
+
+    // computes the chart values
+    for (let k in notesOrder){
+        var currentNoteIndexes=notesOrder[k];
+        currentNotesArray[currentNoteIndexes[0]][currentNoteIndexes[1]].push(notes[currentNoteIndexes[0]][currentNoteIndexes[1]][currentNoteIndexes[2]]);
+        var currentNote=calculAverage(currentNotesArray, false);
+        currentNote=currentNote.toFixed(2);
+        xValues.push(parseInt(k));
+        yValues.push(parseFloat(currentNote));
+
+        if(currentNote<minValue){minValue=currentNote;}
+        if(currentNote>maxValue){maxValue=currentNote;}
+    }
+
+    minValue=Math.floor(minValue);
+    maxValue=Math.floor(maxValue)+1;
+    if(minValue<0){minValue=0;}
+    if(maxValue>20){maxValue=20;}
+
+    console.log("xyvalues", xValues, yValues);
+    console.log(minValue, maxValue)
+
+    // plots the average chart
+    new Chart("averageChart", {
+        type: "line",
+        data: {
+          labels: xValues,
+          datasets: [{
+            fill: false,
+            lineTension: 0,
+            backgroundColor: "rgba(0,0,255,1.0)",
+            borderColor: "rgba(0,0,255,0.1)",
+            data: yValues
+          }]
+        },
+        options: {
+          legend: {display: false},
+          scales: {
+            yAxes: [{ticks: {min: minValue, max:maxValue}}],
+          }
+        }
+      });
+}
+
+
 // exports the current data to the clipboard
 function exportData(){
-    navigator.clipboard.writeText(JSON.stringify(notes));
+    navigator.clipboard.writeText(JSON.stringify([notes, notesOrder]));
     document.getElementById("exportDataButton").innerHTML="données copiées";
 }
 
 // imports the data placed in the data input
 function importData(){
     var data = document.getElementById("importDataInput").value;
-    var hasNotesBeenLoaded = loadNotes(JSON.parse(data));
+    var parsedData = JSON.parse(data);
+    var hasNotesBeenLoaded=loadNotes(parsedData[0], parsedData[1]);
     document.getElementById("importDataInput").value="";
+    buildTable();
 }
 
 // calculates the note's according color
@@ -43,28 +108,30 @@ function changeColorStrength(){
 
 // cleans the page
 function cleanPage(){
-    loadNotes([]);
+    loadNotes([], []);
     buildTable();
 }
 
 // calculs the current average
-function calculAverage(){
+function calculAverage(notesArray="", show=true){
     var avg=0;
     var coeffSum=0
     var avgModified=false;
 
-    for (let k in notes){
+    if(notesArray==""){notesArray=notes;}
+
+    for (let k in notesArray){
         var subjectAvg=0;
         var subjectCoeffSum=0;
         var subjectAvgModified=false;
 
-        for (let n in notes[k]){
+        for (let n in notesArray[k]){
             var subSubjectAvg=0;
             var subSubjectAvgModified = false;
             var numberOfNotes = 0;
 
-            for (let i in notes[k][n]){
-                var currentNote = notes[k][n][i]
+            for (let i in notesArray[k][n]){
+                var currentNote = notesArray[k][n][i]
                 if(subjects[k][2][n].length==3){var noteOn = subjects[k][2][n][2];}
                 else{var noteOn = 20;}
 
@@ -109,20 +176,21 @@ function calculAverage(){
             avgModified=true;
             //console.log("sub", subjectAvg, subjectCoeffSum);
             
-
-            subjectAverageDivChildNodes[0].innerHTML=(subjectAvg*globalOutOf/100).toFixed(2);
-            subjectAverageDivChildNodes[0].visibility="visible";
-            subjectAverageDivChildNodes[1].visibility="visible";
-            if(!strongColors){
-                subjectAverageDivChildNodes[0].style.color = calculAverageColor(subjectAvg*globalOutOf/100);
-                document.getElementById("tableDiv").childNodes[k].style.backgroundColor="transparent";
-            }
-            else{
-                document.getElementById("tableDiv").childNodes[k].style.backgroundColor=calculAverageColor(subjectAvg*globalOutOf/100);
-                subjectAverageDivChildNodes[0].style.color = "rgb(0,0,0)";
+            if(show){
+                subjectAverageDivChildNodes[0].innerHTML=(subjectAvg*globalOutOf/100).toFixed(2);
+                subjectAverageDivChildNodes[0].visibility="visible";
+                subjectAverageDivChildNodes[1].visibility="visible";
+                if(!strongColors){
+                    subjectAverageDivChildNodes[0].style.color = calculAverageColor(subjectAvg*globalOutOf/100);
+                    document.getElementById("tableDiv").childNodes[k].style.backgroundColor="transparent";
+                }
+                else{
+                    document.getElementById("tableDiv").childNodes[k].style.backgroundColor=calculAverageColor(subjectAvg*globalOutOf/100);
+                    subjectAverageDivChildNodes[0].style.color = "rgb(0,0,0)";
+                }
             }
         }
-        else{
+        else if(show){
             subjectAverageDivChildNodes[0].visibility="collapse";
             subjectAverageDivChildNodes[1].visibility="collapse";
             subjectAverageDivChildNodes[0].style.color = "rgb(0,0,0)";
@@ -141,31 +209,36 @@ function calculAverage(){
 
         //console.log("moyenne", avg);
         
-        avgTextField.innerHTML=avg.toFixed(2);
-        avgTextField.style.visibility = "visible";
-        outOfTextField.style.visibility = "visible";
-        if(!strongColors){
-            avgTextField.style.color = calculAverageColor(avg);
-            document.body.style.backgroundColor="transparent";
-        }
-        else{
-            document.body.style.backgroundColor=calculAverageColor(avg);
-            avgTextField.style.color = "rgb(0,0,0)";
+        if(show){
+            avgTextField.innerHTML=avg.toFixed(2);
+            avgTextField.style.visibility = "visible";
+            outOfTextField.style.visibility = "visible";
+            if(!strongColors){
+                avgTextField.style.color = calculAverageColor(avg);
+                document.body.style.backgroundColor="transparent";
+            }
+            else{
+                document.body.style.backgroundColor=calculAverageColor(avg);
+                avgTextField.style.color = "rgb(0,0,0)";
+            }
         }
     }
-    else{
+    else if(show){
         avgTextField.style.visibility = "collapse";
         outOfTextField.style.visibility = "collapse";
         avgTextField.style.color = "rgb(0,0,0)";
         document.body.style.backgroundColor="transparent";
     }
 
+    return avg;
 }
 
 
 // loads the saved notes or creates the notes table
-function loadNotes(givenNotes){
+function loadNotes(givenNotes, givenNotesOrder){
     if(givenNotes==null){givenNotes=[];}
+    if(givenNotesOrder==null){givenNotesOrder=[];}
+    else{notesOrder=givenNotesOrder;}
 
     // checks if the given notes format is the good one
     var isNotesFormatCorrect=true;
@@ -180,15 +253,9 @@ function loadNotes(givenNotes){
            }
        }
     }
-    /*if (subjects.length!=data.length){isNotesFormatCorrect = false;}
-    for (let k in subjects){
-        console.log(subjects[k][2], data[k]);
-        if(subjects[k][2].length!=data[k].length){isNotesFormatCorrect = false;}
-    }*/
 
     if (isNotesFormatCorrect){
         notes=givenNotes;
-        buildTable();
     }
     else{
         notes=[];
@@ -200,6 +267,7 @@ function loadNotes(givenNotes){
         }
     }
     localStorage.setItem("notes", JSON.stringify(notes));
+    localStorage.setItem("notesOrder", JSON.stringify(notesOrder));
 
     return isNotesFormatCorrect;
 }
@@ -218,11 +286,12 @@ function inputModified(element){
     //for(let k in value){if("0123456789.,/".includes(value[k])==false){isValueNumber=false;}}
     for(let k in value){isValueNumber &&="0123456789.,/".includes(value[k]);}
     notes[targetedSubject[0]][targetedSubject[1]][targetedSubject[2]]=value;
+    //notesOrder.push(targetedSubject);
 
     // adds a line if there are no more left
     if (targetedSubject[2] == notes[targetedSubject[0]][targetedSubject[1]].length-1 && targetedSubject.value!=""){
         notes[targetedSubject[0]][targetedSubject[1]].push("");
-        console.log("newline ?!")
+        //console.log("newline ?!")
 
         // creates the input boxes and sets it up
         var inputBox = document.createElement("input");
@@ -250,26 +319,28 @@ function inputModified(element){
     while (lastFilledLine==-1 && i>=0){
         if(notes[targetedSubject[0]][targetedSubject[1]][i]!=""){lastFilledLine=i;}
         i--;
-        console.log(i, notes[targetedSubject[0]][targetedSubject[1]][i])
+        //console.log(i, notes[targetedSubject[0]][targetedSubject[1]][i])
     }
 
-    console.log("LASTFILLEDLINE", lastFilledLine+1, notes[targetedSubject[0]][targetedSubject[1]].length-lastFilledLine-2);
-    console.log("csc", lastFilledLine, notes[targetedSubject[0]][targetedSubject[1]].length)
+    //console.log("LASTFILLEDLINE", lastFilledLine+1, notes[targetedSubject[0]][targetedSubject[1]].length-lastFilledLine-2);
+    //console.log("csc", lastFilledLine, notes[targetedSubject[0]][targetedSubject[1]].length)
 
     // deletes all the other empty lines
     for(let i=lastFilledLine+2; i<notes[targetedSubject[0]][targetedSubject[1]].length; i++){
-        console.log("FUUUUCK", "idInput;"+targetedSubject[0]+";"+targetedSubject[1]+";"+i)
+        //console.log("FUUUUCK", "idInput;"+targetedSubject[0]+";"+targetedSubject[1]+";"+i)
         document.getElementById("idInput;"+targetedSubject[0]+";"+targetedSubject[1]+";"+i).remove();
     }
     notes[targetedSubject[0]][targetedSubject[1]].splice(lastFilledLine+1, notes[targetedSubject[0]][targetedSubject[1]].length-lastFilledLine-2);
 
     // saves the changes to the notes
     localStorage.setItem("notes", JSON.stringify(notes));
+    localStorage.setItem("notesOrder", JSON.stringify(notesOrder));
 
-    console.log(notes);
+    console.log(notes, notesOrder);
 
     //buildTable();
     calculAverage();
+    makeAverageChart();
 
     // changes the color of the input if incorrect
     if (!isValueNumber){document.getElementById(targetedInput.id).style.backgroundColor = "red";}
@@ -354,6 +425,7 @@ function buildTable(){
     // replaces the cursor where it should be
     if(activeElementId!="" && isNaN(activeElementId) && Array.from(document.querySelectorAll('[id]')).map(el => el.id).includes(activeElementId)){document.getElementById(activeElementId).focus();}
 
+    makeAverageChart();
     calculAverage();
 }
 
@@ -386,7 +458,7 @@ function initialize(){
     document.getElementById("exportDataButton").addEventListener("click", exportData);
 
     // loads the saved notes
-    loadNotes(JSON.parse(localStorage.getItem("notes")));
+    loadNotes(JSON.parse(localStorage.getItem("notes")), JSON.parse(localStorage.getItem("notesOrder")));
 
     buildTable();
 }
