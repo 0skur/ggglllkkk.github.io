@@ -22,6 +22,12 @@ body{
     margin: 2px;
 }
 
+.noteOrderInput{
+    max-width: 50px;
+    max-height: 50px;
+    font-size: xx-large;
+}
+
 .subSubjectHeader{
     border: 1px solid black;
 }
@@ -35,7 +41,7 @@ body{
     row-gap: 20px;
 }
 
-#cleanButton{
+#cleanButton, #computeGraphButton{
     font-size: xx-large;
 }
 
@@ -62,7 +68,7 @@ body{
     font-size: 20px;
 }
 
-#strongColorsButton{
+#strongColorsButton, #showGraphButton{
     width: 30px;
     height: 30px;
 }

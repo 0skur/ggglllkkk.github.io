@@ -8,55 +8,45 @@ var showAverageGraph = false;
 var isMobileBrowser = false;
 
 
-// called to place correctly the notes order
-function assignNoteOrder(){
-    for (let k in notesOrder){
-        var currentNoteIndex=notesOrder[k];
-        document.getElementById("idInput;"+currentNoteIndex[0]+";"+currentNoteIndex[1]+";"+currentNoteIndex[2]).parentNode.childNodes[1].value=parseInt(k)+1;
-    }
-}
+function changeNoteOrder(){
 
-// called when the notes order is modified
-function orderModified(element){
-
-    // determines the modified field
-    var targetedInput = element.target;
-    var targetedSubject = targetedInput.parentNode.childNodes[0].id.replace("idInput;", "").split(";");
-    var targetedColumn = targetedInput.parentNode.parentNode;
-
-    // veririfes is the new value is correct
-    var value = targetedInput.value;
-    isValueNumber = true;
-    for(let k in value){isValueNumber &&="0123456789.,/".includes(value[k]);}
-
-    // checks the current note's order
-    var lastNoteOrder = -1;
-    for (let k in notesOrder){
-        var currentNote= notesOrder[k]
-        if(currentNote[0]==targetedSubject[0] && currentNote[1]==targetedSubject[1] && currentNote[2]==targetedSubject[2]){
-            lastNoteOrder=k;
+    var tempNotesOrder = [];
+    for(let k in notes){
+        for(let n in notes[k]){
+            for(let i in notes[k][n]){
+                var currentNoteOrder = document.getElementById("idInput;"+k+";"+n+";"+i).parentNode.childNodes[1].value;
+				if(tempNotesOrder[currentNoteOrder-1]!=undefined){tempNotesOrder[currentNoteOrder-1]=undefined;}
+                else if(currentNoteOrder!="" && notes[k][n][i]!=""){tempNotesOrder[currentNoteOrder-1]=[k, n, i];}
+            }
         }
     }
 
-    console.log(value!="", lastNoteOrder)
-
-    // updates the notesOrder array
-    if(isValueNumber){
-        if(lastNoteOrder!=-1){notesOrder.splice(lastNoteOrder, 1);}
-        if(value!=""){
-            notesOrder.splice(value, 0, targetedSubject);
-        }
-        else{
-            //notesOrder.splice(value+1, 1);
-        }
+    notesOrder=[];
+    for(let k in tempNotesOrder){
+        if(tempNotesOrder[k]!=null){notesOrder.push(tempNotesOrder[k]);}
     }
 
     // saves the changes
     localStorage.setItem("notesOrder", JSON.stringify(notesOrder));
 
-    console.log(notesOrder)
+    //console.log(notesOrder);
     assignNoteOrder();
     makeAverageGraph();
+}
+
+// called to place correctly the notes order
+function assignNoteOrder(){
+	// resets all the inputs
+	var orderInputList = document.getElementsByClassName("noteOrderInput");
+	for(let k in orderInputList){
+		orderInputList[k].value="";
+	}
+
+	// changes the concerned inputs
+    for (let k in notesOrder){
+        var currentNoteIndex=notesOrder[k];
+        document.getElementById("idInput;"+currentNoteIndex[0]+";"+currentNoteIndex[1]+";"+currentNoteIndex[2]).parentNode.childNodes[1].value=parseInt(k)+1;
+    }
 }
 
 // makes the average chart
@@ -80,8 +70,6 @@ function makeAverageGraph(){
         // chart variables
         var xValues=[]
         var yValues=[]
-        var minValue=20;
-        var maxValue=0;
         var currentNotesArray=[]
 
         // initializes the current notes array
@@ -100,17 +88,9 @@ function makeAverageGraph(){
             currentNote=currentNote.toFixed(2);
             xValues.push(parseInt(k));
             yValues.push(parseFloat(currentNote));
-
-            if(currentNote<minValue){minValue=currentNote;}
-            if(currentNote>maxValue){maxValue=currentNote;}
         }
 
-        minValue=Math.floor(minValue);
-        maxValue=Math.floor(maxValue)+1;
-        if(minValue<0){minValue=0;}
-        if(maxValue>20){maxValue=20;}
-
-        console.log("xyvalues", xValues, yValues);
+        //console.log("xyvalues", xValues, yValues);
 
         // plots the average chart
         new Chart("averageGraph", {
@@ -128,7 +108,7 @@ function makeAverageGraph(){
             options: {
               legend: {display: false},
               scales: {
-                yAxes: [{ticks: {min: minValue, max:maxValue}}],
+                //yAxes: [{ticks: {min: minValue, max:maxValue}}],
               }
             }
           });
@@ -264,8 +244,9 @@ function calculAverage(notesArray="", show=true){
             }
         }
         else if(show){
-            subjectAverageDivChildNodes[0].visibility="collapse";
-            subjectAverageDivChildNodes[1].visibility="collapse";
+			subjectAverageDivChildNodes[0].innerHTML="";
+            //subjectAverageDivChildNodes[0].visibility="collapse";
+            //subjectAverageDivChildNodes[1].visibility="collapse";
             subjectAverageDivChildNodes[0].style.color = "rgb(0,0,0)";
             document.getElementById("tableDiv").childNodes[k].style.backgroundColor="transparent";
         }
@@ -358,6 +339,7 @@ function inputModified(element){
     isValueNumber = true;
     for(let k in value){isValueNumber &&="0123456789.,/".includes(value[k]);}
     notes[targetedSubject[0]][targetedSubject[1]][targetedSubject[2]]=value;
+	if(isValueNumber && value!=""){targetedInput.parentNode.childNodes[1].value=notesOrder.length+1;}
 
     // adds a line if there are no more left
     if (targetedSubject[2] == notes[targetedSubject[0]][targetedSubject[1]].length-1 && targetedSubject.value!=""){
@@ -418,11 +400,11 @@ function inputModified(element){
     localStorage.setItem("notes", JSON.stringify(notes));
     localStorage.setItem("notesOrder", JSON.stringify(notesOrder));
 
-    console.log(notes, notesOrder);
+    //console.log(notes, notesOrder);
 
     //buildTable();
+	changeNoteOrder();
     calculAverage();
-    makeAverageGraph();
 
     // changes the color of the input if incorrect
     if (!isValueNumber){document.getElementById(targetedInput.id).style.backgroundColor = "red";}
@@ -486,8 +468,6 @@ function buildTable(){
                 var noteOrderInput = document.createElement("input");
                 noteOrderInput.classList.add("noteOrderInput");
                 noteOrderInput.type="text";
-                noteOrderInput.addEventListener("input", (element) => orderModified(element));
-                //noteOrderInput.addEventListener("change", (element) => orderModified(element));
 
                 // adds the input to its column
                 inputBoxDiv.appendChild(inputBox);
@@ -550,6 +530,7 @@ function initialize(){
     document.getElementById("cleanButton").addEventListener("click", cleanPage);
     document.getElementById("strongColorsButton").addEventListener("click", changeColorStrength);
     document.getElementById("showGraphButton").addEventListener("click", changeShowGraph);
+    document.getElementById("computeGraphButton").addEventListener("click", changeNoteOrder);
     document.getElementById("importDataButton").addEventListener("click", importData);
     document.getElementById("exportDataButton").addEventListener("click", exportData);
 
