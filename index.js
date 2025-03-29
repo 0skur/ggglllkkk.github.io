@@ -86,7 +86,7 @@ function makeAverageGraph(){
             currentNotesArray[currentNoteIndexes[0]][currentNoteIndexes[1]].push(notes[currentNoteIndexes[0]][currentNoteIndexes[1]][currentNoteIndexes[2]]);
             var currentNote=calculAverage(currentNotesArray, false);
             currentNote=currentNote.toFixed(2);
-            xValues.push(parseInt(k));
+            xValues.push(parseInt(k)+1);
             yValues.push(parseFloat(currentNote));
         }
 
