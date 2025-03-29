@@ -22,6 +22,11 @@ body{
     align-self: start;
 }
 
+.noteOrderInput{
+    text-align: center;
+    align-self: start;
+}
+
 .subSubjectHeader{
     
 }
