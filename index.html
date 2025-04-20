@@ -1,46 +1,57 @@
 <!DOCTYPE html>
-
-<html>
-    <head>
-        <title>Calcul de la moyenne</title>
-        <meta charset="utf-8"/>
-        <link rel="icon" type="image/x-icon" href="data/favicon.ico">
-    </head>
-    <body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calcul de la moyenne</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
         <h1>Calcul de la moyenne</h1>
+        <section>
 
-        <div id="optionsButtons">
-            <button id="cleanButton">Nettoyer</button>
-            <label class="switch">
-                <input type="checkbox" id="strongColorsButton" checked>
-                <span class="slider round"></span>
-                Colorier le fond
-            </label>
-            <label class="switch">
-                <input type="checkbox" id="showGraphButton">
-                <span class="slider round"></span>
-                Montrer le graphique d'évolution
-            </label>
-            <button id="computeGraphButton">Calculer le graphique</button>
-        </div>
-        
-        <div id="tableDiv"></div>
+        </section>
+    </header>
+    <main>
+        <template id="mainSubject">
+            <section class="subject">
+                <p class="description"></p>
+                <section class="twoColumns">
+                    <section class="left">
+                        <p class="type"></p>
+                        <input class="submit" type="text" placeholder="/20">
+                    </section>
+                    <section class="right">
+                        <p class="type"></p>
+                        <input class="submit" type="text" placeholder="/5">
+                        <p class="mean"><span></span>/20</p>
+                    </section>
+                </section>
+            </section>
+        </template>
+        <template id="secondarySubject">
+            <section class="subject">
+                <p class="description"></p>
+                    <section class="center">
+                        <p class="type"></p>
+                        <input class="submit" type="text" placeholder="/5">
+                    </section>
+                        <p class="mean"><span></span>/20</p>
+            </section>
+        </template>
+        <template id="gradeOn20">
+            <input type="text" class="submit" placeholder="/20"></input>
+        </template>
+        <template id="gradeOn5">
+            <input type="text" class="submit" placeholder="/5"></input>
+        </template>
+    </main>
+    <footer>
 
-        <div id="averageDiv">
-            <text id="average"></text>
-            <text id="outOf">/20</text>
-        </div>
-
-        <canvas id="averageGraph" style="width:100%;max-width:700px"></canvas>
-
-        <div id="dataOptions">
-            <input type="text" id="importDataInput" placeholder="données à importer">
-            <button id="importDataButton">importer données</button>
-            <button id="exportDataButton">exporter données</button>
-            <text id="disclaimerText">Merci de remarquer que ce site ne permet que de calculer une potentielle approximation de votre moyenne, et peut ne pas représenter celle calculée officiellement. De plus, il est possible qu'arrive des erreurs de calcul, donc ne prenez pas trop le résultat affiché à coeur. ❤️</text>
-        </div>
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-        <script language="javascript" src="index.js"></script>
-    </body>
+    </footer>
+    <script src="subjects.js"></script>
+    <script src="addSubject.js"></script>
+    <script src="addGrade.js"></script>
+    <script src="main.js"></script>
+</body>
 </html>
