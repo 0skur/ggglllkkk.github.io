@@ -1,13 +1,13 @@
-let mainSubejctEval = {
+const mainSubejctEval = {
     type : "DS",
     coeff: 4,
 }
-let secondarySubejctEval = {
+const secondarySubejctEval = {
     type : "tests",
     coeff: 1,
 }
 
-let subjects = [
+const subjects = [
         {
             name : "Maths",
             coeff : 7,

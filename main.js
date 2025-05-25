@@ -1,2 +1,3 @@
 addSubject();
+createListOfGrades();
 GradeListener();

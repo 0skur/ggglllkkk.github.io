@@ -14,6 +14,7 @@ function addSubject(){
             newSubject.querySelector(".right > .type").innerHTML = subjects[i].eval[1].type + ", coeff: " + subjects[i].eval[1].coeff;
         }
         newSubject.querySelector(".description").innerHTML = subjects[i].name + ", coeff: " + subjects[i].coeff;
+        newSubject.querySelector(".subject").id = subjects[i].name;
 
         subjectContainer.appendChild(newSubject);
     }

@@ -62,10 +62,27 @@ header {
     grid-template-columns: repeat(1, 1fr);
     height: max-content;
 }
-.mean {
+.meanContainer {
     text-align: end;
 }
 .grade {
     border: 1px solid #000;
     text-align: center;
+}
+
+.mean {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1em;
+    background-color: rgb(50, 100, 200);
+    color: white;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+.hidden {
+    visibility: hidden;
+}
+.visible {
+    visibility: visible;
 }
