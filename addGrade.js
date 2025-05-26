@@ -34,7 +34,6 @@ function addGrade(grade, inputElement) {
         newGrade = gradeParagraphOn5.cloneNode(true).content;
         grades[inputElement.parentElement.parentElement.id][1][1].push(grade);
     }
-    console.log(grades);
     newGrade.addEventListener("input", addGradeCallback);
 
     inputElement.removeEventListener("input", addGradeCallback);
@@ -67,7 +66,7 @@ function removeGrade(grade, inputElement) {
             grades[inputElement.parentElement.parentElement.parentElement.id][2][1].splice(getPositionInDOM(inputElement), 1)
         }
         else if (inputElement.parentElement.classList.contains("center")){
-            grades[inputElement.parentElement.parentElement.parentElement.id][1][1][position] = checkGrade(grade);
+            grades[inputElement.parentElement.parentElement.id][1][1].splice(getPositionInDOM(inputElement), 1);
         }
         inputElement.remove();
         calculateMean();
@@ -96,7 +95,6 @@ function changeGradeValue(grade, inputElement) {
 }
 
 function checkGrade(grade,maxGrade){
-    console.log(grade, grade.match(/[0-9]+,?[0-9]*/g));
     if (grade.match(/\d/g) === null || grade.match(/[0-9]+,?[0-9]*/g)[0] !== grade) {
         return "incorrect value";
     }

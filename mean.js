@@ -8,8 +8,14 @@ function createMean(){
 
 function showMean(){
     subjects.forEach(subject => {
+        let meanOn1 = ["Maths","Physique","Chimie","Bio"];
         if (!isNaN(meanPerSubject[subject.name])){
-            document.querySelector("#" + subject.name + " .meanValue").innerHTML = meanPerSubject[subject.name].toFixed(2);
+            if (meanOn1.includes(subject.name)){
+                document.querySelector("#" + subject.name + " .meanValue").innerHTML = meanPerSubject[subject.name].toFixed(2);
+            }
+            else {
+                document.querySelector("#" + subject.name + " .meanValue").innerHTML = meanPerSubject[subject.name].toFixed(2)/4;
+            }
         }
         else {
             document.querySelector("#" + subject.name + " .meanValue").innerHTML = "";

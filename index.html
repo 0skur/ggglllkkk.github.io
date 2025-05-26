@@ -5,39 +5,42 @@
     <title>Calcul de la moyenne</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="gradesColors.css">
+    <link rel="stylesheet" href="animation.css">
+    <link rel="stylesheet" href="responsive.css">
 </head>
 <body>
     <header>
         <h1>Calcul de la moyenne</h1>
-        <section>
-
-        </section>
     </header>
     <main>
         <template id="mainSubject">
             <section class="subject">
                 <p class="description" id=""></p>
                 <section class="twoColumns">
-                    <section class="left">
+                    <div class="left">
                         <p class="type"></p>
                         <input class="submit" type="text" placeholder="/20">
-                    </section>
-                    <section class="right">
+                    </div>
+                    <div class="right">
                         <p class="type"></p>
                         <input class="submit" type="text" placeholder="/5">
-                        <p class="meanContainer"><span class="meanValue"></span>/20</p>
-                    </section>
+                    </div>
+                    <div class="meanContainer">
+                        <p class="meanPerSubject"><span class="meanValue"></span>/20</p>
+                    </div>
                 </section>
             </section>
         </template>
         <template id="secondarySubject">
             <section class="subject">
                 <p class="description" id=""></p>
-                    <section class="center">
+                    <div class="center">
                         <p class="type"></p>
                         <input class="submit" type="text" placeholder="/5">
-                    </section>
-                        <p class="meanContainer"><span class="meanValue"></span>/5</p>
+                    </div>
+                <div class="meanContainer">
+                    <p class="meanPerSubject"><span class="meanValue"></span>/5</p>
+                </div>
             </section>
         </template>
         <template id="gradeOn20">
@@ -48,9 +51,9 @@
         </template>
     </main>
     <footer>
-        <section class="mean hidden">
+        <div class="mean hidden">
             <p>Votre moyenne :<span id="mean"></span>/20</p>
-        </section>
+        </div>
     </footer>
     <script src="subjects.js"></script>
     <script src="addSubject.js"></script>
@@ -59,5 +62,7 @@
     <script src="gradesColor.js"></script>
     <script src="mean.js"></script>
     <script src="main.js"></script>
+
+    <script src="animate.js"></script>
 </body>
 </html>

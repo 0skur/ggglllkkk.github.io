@@ -10,7 +10,6 @@ function showIncorrectValue(){
                 }
             }
             for (let j = 0; j < grades[subjects[i].name][2][1].length; j++) {
-                console.log(grades[subjects[i].name][2][1][j])
                 if (grades[subjects[i].name][2][1][j] === "incorrect value" || Number(grades[subjects[i].name][2][1][j]) < 0 || Number(grades[subjects[i].name][2][1][j]) > 5){
                     document.querySelector("#" + subjects[i].name + " .right").children[j+1].classList.add("incorrect");
                 }
@@ -21,7 +20,6 @@ function showIncorrectValue(){
         }
         else if (grades[subjects[i].name].length === 2){
             for (let j = 0; j < grades[subjects[i].name][1][1].length; j++) {
-                console.log(grades[subjects[i].name][1][1][j])
                 if (grades[subjects[i].name][1][1][j] === "incorrect value" || Number(grades[subjects[i].name][1][1][j]) < 0 || Number(grades[subjects[i].name][1][1][j]) > 5){
                     document.querySelector("#" + subjects[i].name + " .center").children[j+1].classList.add("incorrect");
                 }

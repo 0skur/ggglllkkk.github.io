@@ -1,0 +1,84 @@
+@media screen and (min-width: 800px) and (max-width: 1500px) {
+    @keyframes subjectHovered {
+        from {
+            padding: 2em;
+            box-shadow: 0px 0px 2em rgba(255,255,255,0.75);
+        }
+        to {
+            padding: 2.5em;
+        }
+    }
+    @keyframes subjectNotHovered {
+        from {
+            padding: 2.5em;
+            box-shadow: 0px 0px 2em rgba(255,255,255,0.75);
+        }
+        to {
+            padding: 2em;
+            box-shadow: none;
+        }
+    }
+
+    main {
+        padding: 8em;
+
+    }
+    .subject {
+        padding: 2em;
+    }
+    .subject:not(:hover){
+        padding: 2em;
+    }
+    .subject:hover{
+        padding: 2.5em;
+    }
+    .description {
+        font-size: xx-large;
+    }
+    .type {
+        font-size: x-large;
+    }
+    .submit {
+        font-size: x-large;
+    }
+    .grade {
+        font-size: x-large;
+    }
+    .meanPerSubject {
+        font-size: x-large;
+    }
+}
+@media screen and (min-width: 500px) and (max-width: 700px) {
+    header{
+        font-size: xx-large;
+        padding: 2em;
+    }
+    footer{
+        font-size: xx-large;
+    }
+    main {
+        padding: 2em 2em 12em 2em;
+    }
+    .subject{
+        margin: 1em;
+    }
+    .description {
+        font-size: xxx-large;
+    }
+    .type {
+        font-size: xx-large;
+    }
+    .submit {
+        font-size: xx-large;
+    }
+    .grade {
+        font-size: xx-large;
+    }
+    .meanContainer{
+        padding-top: 1.5em;
+        padding-bottom: 1.5em;
+    }
+    .meanPerSubject {
+        font-size: xx-large;
+    }
+}

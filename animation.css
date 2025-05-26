@@ -1,0 +1,19 @@
+@keyframes subjectHovered {
+    from {
+        padding: 1em;
+        box-shadow: 0px 0px 2em rgba(255,255,255,0.75);
+    }
+    to {
+        padding: 1.5em;
+    }
+}
+@keyframes subjectNotHovered {
+    from {
+        padding: 1.5em;
+        box-shadow: 0px 0px 2em rgba(255,255,255,0.75);
+    }
+    to {
+        padding: 1em;
+        box-shadow: none;
+    }
+}
