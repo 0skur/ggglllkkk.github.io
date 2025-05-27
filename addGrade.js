@@ -3,6 +3,42 @@ const gradeParagraphOn20 = document.querySelector("#gradeOn20");
 const addGradeCallback = (event) => {addGrade(event.target.value, event.target)};
 const changeGradeValueCallback = (event) => {changeGradeValue(event.target.value, event.target)};
 
+function sendToLocalStorage(grades) {
+    localStorage.setItem("grades", JSON.stringify(grades));
+}
+
+function refreshFromLocalStorage() {
+    if (localStorage.getItem("grades") !== null) {
+        grades = JSON.parse(localStorage.getItem("grades"));
+        Object.keys(grades).forEach((subject) => {
+            const grade = grades[subject];
+            if (grade.length === 3){
+                if (grade[1][1].length > 0){
+                    grade[1][1].forEach((gradeValue) => {
+                        refreshAddGrade(gradeValue.toString(), document.querySelector('#' + subject + ' .left .submit'));
+                    })
+                }
+                if (grade[2][1].length > 0) {
+                    grade[2][1].forEach((gradeValue) => {
+                        refreshAddGrade(gradeValue.toString(), document.querySelector('#' + subject + ' .right .submit'));
+                    })
+                }
+            }
+            else if (grade.length === 2) {
+                if (grade[1][1].length > 0) {
+                    grade[1][1].forEach((gradeValue) => {
+                        refreshAddGrade(gradeValue.toString(), document.querySelector('#' + subject + ' .center .submit'));
+                    })
+                }
+            }
+        })
+        showIncorrectValue();
+    }
+    else {
+        grades = {};
+    }
+}
+
 function GradeListener() {
     document.querySelectorAll("input").forEach((element) => {
         if (element.classList.contains("submit")) {
@@ -12,6 +48,34 @@ function GradeListener() {
             element.addEventListener("input", changeGradeValueCallback);
         }
     })
+}
+
+function refreshAddGrade(grade, inputElement) {
+    if (grade.trim() === "" ) {
+        return;
+    }
+    let newGrade;
+    if (inputElement.parentElement.classList.contains("left") || inputElement.parentElement.classList.contains("right")) {
+        if (inputElement.parentElement.classList.contains("left")){
+            newGrade = gradeParagraphOn20.cloneNode(true).content;
+        }
+        else {
+            newGrade = gradeParagraphOn5.cloneNode(true).content;
+        }
+
+    }
+    else if (inputElement.parentElement.classList.contains("center")) {
+        newGrade = gradeParagraphOn5.cloneNode(true).content;
+    }
+    inputElement.value = grade;
+    newGrade.addEventListener("input", addGradeCallback);
+
+    inputElement.removeEventListener("input", addGradeCallback);
+    inputElement.classList.remove("submit");
+    inputElement.classList.add("grade");
+    inputElement.after(newGrade);
+    calculateMean();
+    GradeListener();
 }
 
 function addGrade(grade, inputElement) {
@@ -42,6 +106,7 @@ function addGrade(grade, inputElement) {
     inputElement.after(newGrade);
     showIncorrectValue();
     calculateMean();
+    sendToLocalStorage(grades);
     GradeListener();
 }
 
@@ -70,6 +135,7 @@ function removeGrade(grade, inputElement) {
         }
         inputElement.remove();
         calculateMean();
+        sendToLocalStorage(grades);
         return true;
     }
     else {
@@ -86,11 +152,12 @@ function changeGradeValue(grade, inputElement) {
             grades[inputElement.parentElement.parentElement.parentElement.id][2][1][getPositionInDOM(inputElement)] = checkGrade(grade,20);
         }
         else if (inputElement.parentElement.classList.contains("center")){
-            grades[inputElement.parentElement.parentElement.parentElement.id][1][1][getPositionInDOM(inputElement)] = checkGrade(grade,5);
+            grades[inputElement.parentElement.parentElement.id][1][1][getPositionInDOM(inputElement)] = checkGrade(grade,5);
         }
     }
     //console.log(grades);
     showIncorrectValue();
+    sendToLocalStorage(grades);
     calculateMean();
 }
 

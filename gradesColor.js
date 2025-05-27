@@ -1,4 +1,5 @@
 function showIncorrectValue(){
+    console.log(grades)
     for (i = 0; i < subjects.length; i++){
         if (grades[subjects[i].name].length === 3){
             for (let j = 0; j < grades[subjects[i].name][1][1].length; j++) {
