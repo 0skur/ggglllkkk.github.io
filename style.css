@@ -15,7 +15,7 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(50, 100, 200);
+    background-color: rgb(30,30,30);
     color: white;
     padding: 0.5em;
     border-bottom: 1px solid #000;
@@ -121,7 +121,7 @@ footer {
     justify-content: center;
     align-items: center;
     padding: 1em;
-    background-color: rgb(50, 100, 200);
+    background-color: rgb(30,30,30);
     color: white;
     font-weight: bold;
     font-size: 1.5em;
